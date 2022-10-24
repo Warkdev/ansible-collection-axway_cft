@@ -8,13 +8,14 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 ---
-author: Cédric Servais <cedric.servais@outlook.com>
-httpapi: isva
+author:
+  - Cédric Servais (@7893254)
+name: axway_cft
 short_description: HttpApi Plugin for Axway CFT
 description:
   - This HttpApi plugin provides methods to connect to Axway CFT
     devices over a HTTP(S)-based api.
-version_added: "1.0"
+version_added: "1.0.0"
 """
 import json
 
@@ -22,11 +23,11 @@ from ansible.module_utils.basic import to_text
 from ansible.plugins.httpapi import HttpApiBase
 from ansible.module_utils.six.moves.urllib.error import HTTPError
 
-from ansible_collections.community.isva.plugins.module_utils.constants import (
-    BASE_HEADERS, BASE_DOWNLOAD_FILE_HEADERS
+from ansible_collections.community.axway_cft.plugins.module_utils.constants import (
+    BASE_HEADERS
 )
 
-from ansible_collections.community.isva.plugins.module_utils.common import ISVAModuleError
+from ansible_collections.community.axway_cft.plugins.module_utils.common import AxwayModuleError
 
 
 class HttpApi(HttpApiBase):
@@ -36,7 +37,7 @@ class HttpApi(HttpApiBase):
         self.user = None
 
     def handle_httperror(self, exc):
-        self._display_message("Handle error: {}".format(str(exc)))
+        self._display_message("Handle error: {0}".format(str(exc)))
         if exc.code == 404:
             # 404 errors need to be handled upstream due to exists methods relying on it.
             # Other codes will be raised by underlying connection plugin.
@@ -63,7 +64,7 @@ class HttpApi(HttpApiBase):
             return dict(code=e.code, contents=json.loads(e.read()))
 
     def download_file(self, path, dest, headers=None):
-        headers = headers if headers is not None else BASE_DOWNLOAD_FILE_HEADERS
+        headers = headers if headers is not None else BASE_HEADERS
         method = 'GET'
         self._display_request(method, path, dest)
 
@@ -71,14 +72,13 @@ class HttpApi(HttpApiBase):
             self._display_request(method, path, None)
             self.connection.get_file(path=path, dest=dest, data=None, method=method, headers=headers)
         except HTTPError as e:
-            self._display_message('HTTPError: {}'.format(str(e)))
+            self._display_message('HTTPError: {0}'.format(str(e)))
             return dict(code=e.code, contents=json.loads(e.read()))
 
         return True
 
     def update_auth(self, response, response_text):
         return None  # We want to explicitely disable any sort of caching so that authentication happens for every request.
-
 
     def _display_request(self, method, url, data=None):
         if data:
@@ -101,7 +101,7 @@ class HttpApi(HttpApiBase):
             return json.loads(response_text) if response_text else {}
         # JSONDecodeError only available on Python 3.5+
         except ValueError:
-            raise ISVAModuleError('Invalid JSON response: %s' % response_text)
+            raise AxwayModuleError('Invalid JSON response: %s' % response_text)
 
     def network_os(self):
         return self.connection._network_os

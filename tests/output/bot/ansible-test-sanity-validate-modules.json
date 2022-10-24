@@ -1,0 +1,10 @@
+{
+    "docs": "https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/validate-modules.html", 
+    "results": [
+        {
+            "message": "The test `ansible-test sanity --test validate-modules` [[explain](https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/validate-modules.html)] failed with 1 error:", 
+            "output": "plugins/httpapi/axway_cft.py:0:0: module-invalid-version-added: DOCUMENTATION: version_added ('1.0') is not a valid collection version (see specification at https://semver.org/): invalid semantic version '1.0'. Got {'author': ['C\u00e9dric Servais (@7893254)'], 'name': 'axway_cft', 'short_description': 'HttpApi Plugin for Axway CFT', 'description': ['This HttpApi plugin provides methods to connect to Axway CFT devices over a HTTP(S)-based api.'], 'version_added': '1.0', 'version_added_collection': 'community.axway_cft'}"
+        }
+    ], 
+    "verified": false
+}

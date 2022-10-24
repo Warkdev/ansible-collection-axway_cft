@@ -13,7 +13,6 @@ import logging.config
 
 logger = logging.getLogger(__name__)
 
-#log_level=dict(type='str', default='INFO', choices=['CRITICAL', 'FATAL', 'ERROR', 'WARN', 'WARNING', 'INFO', 'DEBUG', 'NOTSET'])
 MAP_VERBOSITY_TO_LOG_LEVEL = {
     0: 'ERROR',
     1: 'ERROR',

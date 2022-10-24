@@ -17,6 +17,8 @@ description:
 version_added: "1.0.0"
 author:
   - Cédric Servais (@7893254)
+extends_documentation_fragment:
+  - community.axway_cft.logging_info_options
 '''
 
 EXAMPLES = r'''
@@ -96,23 +98,24 @@ class ArgumentSpec(object):
 
 
 def __exec_get_facts(module):
-    response = fetch_activation_offerings(module=module)
+    response = fetch_about(module=module)
     return response
 
 
 def exec_module(module):
     response = __exec_get_facts(module=module)
     ansible_facts = {
-      'axway_cft_version': response['version'],
-      'axway_cft_level': response['level'],
-      'axway_cft_system': response['system'],
-      'axway_cft_server_time': response['server_time'],
-      'axway_cft_server_utc': response['server_utc'],
-      'axway_cft_multinode_enabled': bool(flatten_boolean(response['multinode_enabled'])),
-      'axway_cft_cg_enabled': bool(flatten_boolean(response['cg_enabled'])),
-      'axway_cft_instance_id': response['instance_id']
-      }
+        'axway_cft_version': response['version'],
+        'axway_cft_level': response['level'],
+        'axway_cft_system': response['system'],
+        'axway_cft_server_time': response['server_time'],
+        'axway_cft_server_utc': response['server_utc'],
+        'axway_cft_multinode_enabled': bool(flatten_boolean(response['multinode_enabled'])),
+        'axway_cft_cg_enabled': bool(flatten_boolean(response['cg_enabled'])),
+        'axway_cft_instance_id': response['instance_id']
+    }
     return {'ansible_facts': ansible_facts}
+
 
 def main():
     spec = ArgumentSpec()
@@ -122,7 +125,7 @@ def main():
     )
     try:
         setup_logging(str_log, module._verbosity)
-        logger.debug('Module parameters {}'.format(module.params))
+        logger.debug('Module parameters %s', module.params)
 
         response = exec_module(module)
         return_value = create_return_object()
