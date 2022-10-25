@@ -1,0 +1,7 @@
+---
+- name: Gathering facts
+  community.axway_cft.axway_cft_facts:
+
+- name: Validate facts
+  assert:
+  - True
