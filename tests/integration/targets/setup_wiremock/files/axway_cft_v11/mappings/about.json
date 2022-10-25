@@ -1,0 +1,26 @@
+{
+    "request": {
+        "method": "GET",
+        "url": "/about",
+        "basicAuth": {
+            "username": "admin",
+            "password": "Passw0rd"
+        }
+    },
+    "response": {
+        "status": 200,
+        "jsonBody": {
+            "version": "3.3.2",
+            "level": "",
+            "system": "unix",
+            "server_time": "1526301034000",
+            "server_utc": "2",
+            "multinode_enabled": "NO",
+            "cg_enabled": "NO",
+            "instance_id": "workstationaddress"
+        },
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    }
+}

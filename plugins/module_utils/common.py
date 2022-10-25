@@ -17,6 +17,10 @@ def logging_argument_spec():
     )
 
 
+def flattened_to_bool(value):
+    return flatten_boolean(value) == 'yes'
+
+
 def flatten_boolean(value):
     truthy = list(BOOLEANS_TRUE) + ['enabled', 'True', 'true', 'YES']
     falsey = list(BOOLEANS_FALSE) + ['disabled', 'False', 'false', 'NO']

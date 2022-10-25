@@ -81,7 +81,7 @@ from ansible_collections.community.axway_cft.plugins.module_utils.axway_utils im
 )
 
 from ansible_collections.community.axway_cft.plugins.module_utils.common import (
-    flatten_boolean, logging_argument_spec
+    flattened_to_bool, logging_argument_spec
 )
 
 logger = logging.getLogger(__name__)
@@ -111,8 +111,8 @@ def exec_module(module):
         'axway_cft_system': response['system'],
         'axway_cft_server_time': response['server_time'],
         'axway_cft_server_utc': response['server_utc'],
-        'axway_cft_multinode_enabled': bool(flatten_boolean(response['multinode_enabled'])),
-        'axway_cft_cg_enabled': bool(flatten_boolean(response['cg_enabled'])),
+        'axway_cft_multinode_enabled': bool(flattened_to_bool(response['multinode_enabled'])),
+        'axway_cft_cg_enabled': bool(flattened_to_bool(response['cg_enabled'])),
         'axway_cft_instance_id': response['instance_id']
     }
     return {'ansible_facts': ansible_facts}
