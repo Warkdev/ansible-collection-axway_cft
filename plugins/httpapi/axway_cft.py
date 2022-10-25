@@ -38,6 +38,9 @@ class HttpApi(HttpApiBase):
 
     def handle_httperror(self, exc):
         self._display_message("Handle error: {0}".format(str(exc)))
+        if exc.code == 400:
+            # 400 errors arise if the request is malformed
+            return False
         if exc.code == 404:
             # 404 errors need to be handled upstream due to exists methods relying on it.
             # Other codes will be raised by underlying connection plugin.
@@ -48,6 +51,7 @@ class HttpApi(HttpApiBase):
                 self.connection._auth = None
                 return True
         return False
+
 
     def send_request(self, path, method='GET', payload=None, headers=None):
         headers = headers if headers else BASE_HEADERS
@@ -63,31 +67,15 @@ class HttpApi(HttpApiBase):
         except HTTPError as e:
             return dict(code=e.code, contents=json.loads(e.read()))
 
-    def download_file(self, path, dest, headers=None):
-        headers = headers if headers is not None else BASE_HEADERS
-        method = 'GET'
-        self._display_request(method, path, dest)
-
-        try:
-            self._display_request(method, path, None)
-            self.connection.get_file(path=path, dest=dest, data=None, method=method, headers=headers)
-        except HTTPError as e:
-            self._display_message('HTTPError: {0}'.format(str(e)))
-            return dict(code=e.code, contents=json.loads(e.read()))
-
-        return True
-
-    def update_auth(self, response, response_text):
-        return None  # We want to explicitely disable any sort of caching so that authentication happens for every request.
 
     def _display_request(self, method, url, data=None):
         if data:
             self._display_message(
-                'ISVA API Call: {0} to {1} with data {2}'.format(method, url, data)
+                'Axway Transfer CFT API Call: {0} to {1} with data {2}'.format(method, url, data)
             )
         else:
             self._display_message(
-                'ISVA API Call: {0} to {1}'.format(method, url)
+                'Axway Transfer CFT API Call: {0} to {1}'.format(method, url)
             )
 
     def _display_message(self, msg):
