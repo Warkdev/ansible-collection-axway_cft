@@ -1,0 +1,20 @@
+{
+    "request": {
+        "method": "GET",
+        "url": "/about",
+        "basicAuth": {
+            "username": "admin",
+            "password": "dummy"
+        }
+    },
+    "response": {
+        "status": 403,
+        "jsonBody": {
+            "code": 99,
+            "message": "Additional error details"
+        },
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    }
+}

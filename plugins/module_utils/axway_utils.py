@@ -10,6 +10,7 @@ __metaclass__ = type
 import os
 import logging
 import logging.config
+import traceback
 
 logger = logging.getLogger(__name__)
 
@@ -51,6 +52,12 @@ def setup_logging(str_log, verbosity):
     }
     logging.config.dictConfig(DEFAULT_LOGGING)
 
+
+def get_traceback(ex, ex_traceback=None):
+    if ex_traceback is None:
+        ex_traceback = ex.__traceback__
+    tb_lines = [ line.rstrip('\n') for line in traceback.format_exception(ex.__class__, ex, ex_traceback)]
+    return '\n'.join(tb_lines)
 
 def parse_fail_message(code, response):
     return 'Axway Transfer CFT returned error {0} with message {1}'.format(code, response)

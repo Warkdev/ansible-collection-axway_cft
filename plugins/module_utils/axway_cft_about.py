@@ -29,6 +29,6 @@ def fetch_about(module):
     response = connection.send_request(path=uri)
 
     if response['code'] != 200:
-        raise AxwayModuleError()(parse_fail_message(response['code'], response['contents']))
+        raise AxwayModuleError(parse_fail_message(response['code'], response['contents']))
 
     return response['contents']

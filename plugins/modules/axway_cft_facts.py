@@ -77,7 +77,7 @@ from ansible.module_utils.basic import AnsibleModule
 from ansible_collections.community.axway_cft.plugins.module_utils.axway_cft_about import fetch_about
 
 from ansible_collections.community.axway_cft.plugins.module_utils.axway_utils import (
-    create_return_object, create_return_error, setup_logging, update_logging_info
+    create_return_object, create_return_error, setup_logging, update_logging_info, get_traceback
 )
 
 from ansible_collections.community.axway_cft.plugins.module_utils.common import (
@@ -135,8 +135,7 @@ def main():
 
         module.exit_json(**return_value)
     except Exception as e:
-        error_log.write(str(e))
-        error_log.write(str(e.code))
+        error_log.write(get_traceback(e))
         return_value = create_return_error(msg=str(e), stdout=str_log.getvalue(), stderr=error_log.getvalue())
         module.fail_json(**return_value)
 
