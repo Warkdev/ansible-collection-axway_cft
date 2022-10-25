@@ -80,7 +80,9 @@ from ansible_collections.community.axway_cft.plugins.module_utils.axway_utils im
     create_return_object, create_return_error, setup_logging, update_logging_info
 )
 
-from ansible_collections.community.axway_cft.plugins.module_utils.common import flatten_boolean
+from ansible_collections.community.axway_cft.plugins.module_utils.common import (
+    flatten_boolean, logging_argument_spec
+)
 
 logger = logging.getLogger(__name__)
 str_log = StringIO()
@@ -90,11 +92,10 @@ error_log = StringIO()
 class ArgumentSpec(object):
     def __init__(self):
         self.supports_check_mode = True
-        argument_spec = dict(
-            log_level=dict(type='str', default='INFO', choices=['CRITICAL', 'FATAL', 'ERROR', 'WARN', 'WARNING', 'INFO', 'DEBUG', 'NOTSET'])
-        )
+        argument_spec = dict()
         self.argument_spec = {}
         self.argument_spec.update(argument_spec)
+        self.argument_spec.update(logging_argument_spec())
 
 
 def __exec_get_facts(module):

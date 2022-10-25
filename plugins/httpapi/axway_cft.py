@@ -52,7 +52,6 @@ class HttpApi(HttpApiBase):
                 return True
         return False
 
-
     def send_request(self, path, method='GET', payload=None, headers=None):
         headers = headers if headers else BASE_HEADERS
 
@@ -66,7 +65,6 @@ class HttpApi(HttpApiBase):
             )
         except HTTPError as e:
             return dict(code=e.code, contents=json.loads(e.read()))
-
 
     def _display_request(self, method, url, data=None):
         if data:

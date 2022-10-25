@@ -11,6 +11,12 @@ from ansible.module_utils.parsing.convert_bool import (
 )
 
 
+def logging_argument_spec():
+    return dict(
+        log_level=dict(type='str', default='INFO', choices=['CRITICAL', 'FATAL', 'ERROR', 'WARN', 'WARNING', 'INFO', 'DEBUG', 'NOTSET'])
+    )
+
+
 def flatten_boolean(value):
     truthy = list(BOOLEANS_TRUE) + ['enabled', 'True', 'true', 'YES']
     falsey = list(BOOLEANS_FALSE) + ['disabled', 'False', 'false', 'NO']

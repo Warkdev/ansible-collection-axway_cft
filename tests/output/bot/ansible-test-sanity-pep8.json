@@ -2,8 +2,8 @@
     "docs": "https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/pep8.html", 
     "results": [
         {
-            "message": "The test `ansible-test sanity --test pep8` [[explain](https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/pep8.html)] failed with 1 error:", 
-            "output": "plugins/modules/axway_cft_facts.py:108:7: E121: continuation line under-indented for hanging indent"
+            "message": "The test `ansible-test sanity --test pep8` [[explain](https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/pep8.html)] failed with 2 errors:", 
+            "output": "plugins/httpapi/axway_cft.py:56:5: E303: too many blank lines (2)\nplugins/httpapi/axway_cft.py:71:5: E303: too many blank lines (2)"
         }
     ], 
     "verified": false
