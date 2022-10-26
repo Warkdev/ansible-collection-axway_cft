@@ -1,0 +1,19 @@
+{
+    "request": {
+        "method": "PUT",
+        "urlPathPattern": "/transfers/(.*)/submit",
+        "headers": {
+            "Accept": "application/json"
+        },
+        "basicAuth": {
+            "username": "admin",
+            "password": "Passw0rd"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    }
+}

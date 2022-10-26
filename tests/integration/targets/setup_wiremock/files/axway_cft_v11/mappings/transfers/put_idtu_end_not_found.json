@@ -1,0 +1,24 @@
+{
+    "priority": 1,
+    "request": {
+        "method": "PUT",
+        "urlPathPattern": "/transfers/T1234567/end",
+        "headers": {
+            "Accept": "application/json"
+        },
+        "basicAuth": {
+            "username": "admin",
+            "password": "Passw0rd"
+        }
+    },
+    "response": {
+        "status": 404,
+        "jsonBody": {
+            "code": "99",
+            "message": "Additional error details."
+        },
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    }
+}

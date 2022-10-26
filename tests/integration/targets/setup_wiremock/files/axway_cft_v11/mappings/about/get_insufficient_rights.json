@@ -2,6 +2,9 @@
     "request": {
         "method": "GET",
         "url": "/about",
+        "headers": {
+            "Accept": "application/json"
+        },
         "basicAuth": {
             "username": "admin",
             "password": "dummy"

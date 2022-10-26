@@ -1,0 +1,40 @@
+{
+    "request": {
+        "method": "GET",
+        "urlPathPattern": "/objects/cftpart",
+        "queryParameters": {
+            "offset": {
+                "matches": "^[0-9]+$"
+            },
+            "limit": {
+                "matches": "^[0-9]+$"
+            }
+        },
+        "headers": {
+            "Accept": "application/json"
+        },
+        "basicAuth": {
+            "username": "admin",
+            "password": "Passw0rd"
+        }
+    },
+    "response": {
+        "status": 200,
+        "jsonBody": {
+            "cftpart": [
+                {
+                    "id": "PARIS"
+                },
+                {
+                    "id": "NEWYORK"
+                }
+            ],
+            "numberOfSelectedRecords": 2,
+            "numberOfRecords": 2,
+            "offset": 0
+        },
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    }
+}

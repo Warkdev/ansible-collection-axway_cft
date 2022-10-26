@@ -1,0 +1,75 @@
+{
+    "request": {
+        "method": "GET",
+        "urlPathPattern": "/logs",
+        "queryParameters": {
+            "severity": {
+                "or": [
+                    {
+                        "matches": "^[F|E|W|I]$"
+                    },
+                    {
+                        "absent": true
+                    }
+                ]
+            },
+            "limit": {
+                "or": [
+                    {
+                        "matches": "^[0-9]+$"
+                    },
+                    {
+                        "absent": true
+                    }
+                ]
+            },
+            "datetimemin": {
+                "or": [
+                    {
+                        "matches": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+                    },
+                    {
+                        "absent": true
+                    }
+                ]
+            },
+            "datetimemax": {
+                "or": [
+                    {
+                        "matches": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+                    },
+                    {
+                        "absent": true
+                    }
+                ]
+            },
+            "pattern": {
+                "or": [
+                    {
+                        "matches": "^.*$"
+                    },
+                    {
+                        "absent": true
+                    }
+                ]
+            }
+        },
+        "headers": {
+            "Accept": "application/json"
+        },
+        "basicAuth": {
+            "username": "admin",
+            "password": "dummy"
+        }
+    },
+    "response": {
+        "status": 403,
+        "jsonBody": {
+            "code": 99,
+            "message": "Additional error details"
+        },
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    }
+}

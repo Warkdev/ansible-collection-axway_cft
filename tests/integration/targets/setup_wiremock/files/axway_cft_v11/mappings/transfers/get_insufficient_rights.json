@@ -1,0 +1,114 @@
+{
+    "request": {
+        "method": "GET",
+        "urlPathPattern": "/transfers",
+        "queryParameters": {
+            "ida": {
+                "or": [
+                    {
+                        "matches": "^(.*)$"
+                    },
+                    {
+                        "absent": true
+                    }
+                ]
+            },
+            "idtu": {
+                "or": [
+                    {
+                        "matches": "^(.*)$"
+                    },
+                    {
+                        "absent": true
+                    }
+                ]
+            },
+            "idt": {
+                "or": [
+                    {
+                        "matches": "^(.*)$"
+                    },
+                    {
+                        "absent": true
+                    }
+                ]
+            },
+            "nidt": {
+                "or": [
+                    {
+                        "matches": "^(.*)$"
+                    },
+                    {
+                        "absent": true
+                    }
+                ]
+            },
+            "part": {
+                "or": [
+                    {
+                        "matches": "^(.*)$"
+                    },
+                    {
+                        "absent": true
+                    }
+                ]
+            },
+            "idf": {
+                "or": [
+                    {
+                        "matches": "^(.*)$"
+                    },
+                    {
+                        "absent": true
+                    }
+                ]
+            },
+            "phase": {
+                "or": [
+                    {
+                        "matches": "^[A|T|Y|Z|X]$"
+                    },
+                    {
+                        "absent": true
+                    }
+                ]
+            },
+            "phasestep": {
+                "or": [
+                    {
+                        "matches": "^[D|C|E|K|H|X]$"
+                    },
+                    {
+                        "absent": true
+                    }
+                ]
+            },
+            "fields": {
+                "matches": "\b(?:PART|DIRECT|TYPE|COMPATSTATE|ACK|STATE|PHASE|PHASESTEP|IDF|IDT|IDTU|PIDTU|NREC|FREC|MSG|DIAGI|DIAGP|REQUSER|REQGROUP|IDA)\b"
+            },
+            "offset": {
+                "matches": "^[0-9]+$"
+            },
+            "limit": {
+                "matches": "^[0-9]+$"
+            }
+        },
+        "headers": {
+            "Accept": "application/json"
+        },
+        "basicAuth": {
+            "username": "admin",
+            "password": "dummy"
+        }
+    },
+    "response": {
+        "status": 403,
+        "jsonBody": {
+            "code": 99,
+            "message": "Additional error details"
+        },
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    }
+}
