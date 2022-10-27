@@ -20,11 +20,6 @@
                 ]
             }
         },
-        "bodyPatterns": [
-            {
-                "matchesJsonPath": "$.msg"
-            }
-        ],
         "headers": {
             "Accept": "application/json"
         },
@@ -34,21 +29,10 @@
         }
     },
     "response": {
-        "status": 201,
+        "status": 400,
         "jsonBody": {
-            "partner": "PARIS",
-            "idf": "T12345",
-            "idtu": "IDTU1234",
-            "state": "A",
-            "phase": "K",
-            "phasestep": "Z",
-            "ida": "T1234567",
-            "diagi": "99",
-            "diagp": "0",
-            "links": {
-                "rel": "self",
-                "href": "https://mycft/transfers/IDTU1234"
-            }
+            "code": 99,
+            "message": "JSON body must contain parameter 'msg'."
         },
         "headers": {
             "Content-Type": "application/json"

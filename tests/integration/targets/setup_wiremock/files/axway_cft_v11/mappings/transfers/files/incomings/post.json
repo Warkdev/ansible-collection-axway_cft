@@ -1,0 +1,64 @@
+{
+    "request": {
+        "method": "POST",
+        "urlPath": "/transfers/files/incomings",
+        "queryParameters": {
+            "part": {
+                "matches": ".*"
+            },
+            "idf": {
+                "or": [
+                    {
+                        "absent": true
+                    },
+                    {
+                        "matches": "[0-9]+"
+                    }
+                ]
+            },
+            "apitimeout": {
+                "or": [
+                    {
+                        "absent": true
+                    },
+                    {
+                        "matches": "[0-9]+"
+                    }
+                ]
+            }
+        },
+        "bodyPatterns": [
+            {
+                "matchesJsonPath": "[?(@.fname)][?(@.password)]"
+            }
+        ],
+        "headers": {
+            "Accept": "application/json"
+        },
+        "basicAuth": {
+            "username": "admin",
+            "password": "Passw0rd"
+        }
+    },
+    "response": {
+        "status": 201,
+        "jsonBody": {
+            "partner": "NEWYORK",
+            "idf": "T56389",
+            "idtu": "IDTU1234",
+            "state": "A",
+            "phase": "K",
+            "phasestep": "Z",
+            "ida": "T1234567",
+            "diagi": "99",
+            "diagp": "0",
+            "links": {
+                "rel": "self",
+                "href": "https://mycft/transfers/IDTU1234"
+            }
+        },
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    }
+}
