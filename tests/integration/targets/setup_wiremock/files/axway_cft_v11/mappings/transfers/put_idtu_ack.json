@@ -3,7 +3,9 @@
         "method": "PUT",
         "urlPathPattern": "/transfers/(.*)/ack",
         "headers": {
-            "Accept": "application/json"
+            "Accept": {
+                "equalTo": "application/json"
+            }
         },
         "basicAuth": {
             "username": "admin",

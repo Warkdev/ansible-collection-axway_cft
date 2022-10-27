@@ -9,20 +9,20 @@
             "idf": {
                 "or": [
                     {
-                        "absent": true
+                        "matches": "[0-9]+"
                     },
                     {
-                        "matches": "[0-9]+"
+                        "absent": true
                     }
                 ]
             },
             "apitimeout": {
                 "or": [
                     {
-                        "absent": true
+                        "matches": "[0-9]+"
                     },
                     {
-                        "matches": "[0-9]+"
+                        "absent": true
                     }
                 ]
             }
@@ -33,7 +33,9 @@
             }
         ],
         "headers": {
-            "Accept": "application/json"
+            "Accept": {
+                "equalTo": "application/json"
+            }
         },
         "basicAuth": {
             "username": "admin",

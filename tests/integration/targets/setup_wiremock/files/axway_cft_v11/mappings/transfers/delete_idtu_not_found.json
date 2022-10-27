@@ -4,7 +4,9 @@
         "method": "DELETE",
         "urlPathPattern": "/transfers/T1234567",
         "headers": {
-            "Accept": "application/json"
+            "Accept": {
+                "equalTo": "application/json"
+            }
         },
         "basicAuth": {
             "username": "admin",

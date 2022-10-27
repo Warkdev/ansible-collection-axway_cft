@@ -55,7 +55,9 @@
             }
         },
         "headers": {
-            "Accept": "application/json"
+            "Accept": {
+                "equalTo": "application/json"
+            }
         },
         "basicAuth": {
             "username": "admin",

@@ -3,7 +3,9 @@
         "method": "PUT",
         "urlPathPattern": "/transfers/(.*)/halt",
         "headers": {
-            "Accept": "application/json"
+            "Accept": {
+                "equalTo": "application/json"
+            }
         },
         "basicAuth": {
             "username": "admin",
