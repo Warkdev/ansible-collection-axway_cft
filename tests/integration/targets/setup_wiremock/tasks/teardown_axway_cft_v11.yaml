@@ -1,0 +1,5 @@
+---
+- name: Remove Wiremock container
+  community.docker.docker_container:
+    name: axway_cft_api_v11
+    state: absent

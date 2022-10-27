@@ -1,0 +1,3 @@
+---
+- name: Tearing down Wiremock for Axway Transfer CFT API v1.1
+  include_tasks: teardown_axway_cft_v11.yaml
