@@ -32,6 +32,24 @@ def flatten_boolean(value):
         return 'no'
 
 
+def build_query_str(**kwargs):
+    query_str = ''
+    for param in kwargs:
+        if param:
+            query_str='{}&{}={}'.format(query_str, param, kwargs[param])
+
+    return query_str[1:] # Remove leading '&' character
+
+
+def build_payload(**kwargs):
+    payload = {}
+    for param in kwargs:
+        if param:
+            payload.update({param: kwargs[param]})
+
+    return payload
+
+
 class Noop(object):
     pass
 

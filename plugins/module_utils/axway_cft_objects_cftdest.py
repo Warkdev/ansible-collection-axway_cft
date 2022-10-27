@@ -13,19 +13,21 @@ from ansible.module_utils.connection import Connection
 
 import logging
 
-uri = '/about'
+uri = '/objects/cftdest'
 
 logger = logging.getLogger(__name__)
 
 
-def fetch_about(module):
-    """ This function fetch the Axway CFT version from the product
+def fetch_cftdest(module, offset=0, limit=100):
+    """ Retrieves the list of cftdest objects
 
     Returns:
         _type_: _description_
     """
+    path = '{}?offset={}&limit={}'.format(uri, offset, limit)
+    logger.debug('Calling path {}'.format(path))
     connection = Connection(module._socket_path)
-    response = connection.send_request(path=uri)
+    response = connection.send_request(path=path)
 
     if response['code'] != 200:
         raise AxwayModuleError(parse_fail_message(response['code'], response['contents']))

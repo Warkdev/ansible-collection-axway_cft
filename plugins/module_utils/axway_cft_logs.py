@@ -8,24 +8,27 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from ansible_collections.community.axway_cft.plugins.module_utils.axway_utils import parse_fail_message
-from ansible_collections.community.axway_cft.plugins.module_utils.common import AxwayModuleError
+from ansible_collections.community.axway_cft.plugins.module_utils.common import AxwayModuleError, build_query_str
 from ansible.module_utils.connection import Connection
 
 import logging
 
-uri = '/about'
+uri = '/logs'
 
 logger = logging.getLogger(__name__)
 
 
-def fetch_about(module):
-    """ This function fetch the Axway CFT version from the product
+def fetch_cftdest(module, severity=None, limit=None, datetimemin=None, datetimemax=None, pattern=None):
+    """ Retrieves the logs corresponding to the criterias
 
     Returns:
         _type_: _description_
     """
+    query_str = build_query_str(severity=severity, limit=limit, datetimemin=datetimemin, datetimemax=datetimemax, pattern=pattern)
+    path = '{}?{}'.format(uri, query_str)
+    logger.debug('Calling path {}'.format(path))
     connection = Connection(module._socket_path)
-    response = connection.send_request(path=uri)
+    response = connection.send_request(path=path)
 
     if response['code'] != 200:
         raise AxwayModuleError(parse_fail_message(response['code'], response['contents']))
