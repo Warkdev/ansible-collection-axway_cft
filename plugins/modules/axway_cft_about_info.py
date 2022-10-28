@@ -18,8 +18,6 @@ version_added: "1.0.0"
 author:
   - Cédric Servais (@7893254)
 options: {}
-extends_documentation_fragment:
-  - community.axway_cft.logging_info_options
 '''
 
 EXAMPLES = r'''

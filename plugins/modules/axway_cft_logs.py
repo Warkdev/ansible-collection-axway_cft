@@ -37,8 +37,9 @@ options:
     dest:
         description: A filepath where the returned log messages must be dumped; they will be dumped under the form [date] node severity code message
         type: str
-extends_documentation_fragment:
-  - community.axway_cft.logging_info_options
+    force:
+        description: Indicates that the log content must be dumped to the file specified at dest. It has no effect otherwise.
+        type: bool
 '''
 
 EXAMPLES = r'''
