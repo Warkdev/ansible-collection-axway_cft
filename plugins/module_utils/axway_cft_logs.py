@@ -18,7 +18,7 @@ uri = '/logs'
 logger = logging.getLogger(__name__)
 
 
-def fetch_cftdest(module, severity=None, limit=None, datetimemin=None, datetimemax=None, pattern=None):
+def fetch_logs(module, severity=None, limit=None, datetimemin=None, datetimemax=None, pattern=None):
     """ Retrieves the logs corresponding to the criterias
 
     Returns:

@@ -10,6 +10,8 @@ from ansible.module_utils.parsing.convert_bool import (
     BOOLEANS_TRUE, BOOLEANS_FALSE
 )
 
+import re
+
 
 def logging_argument_spec():
     return dict(
@@ -48,6 +50,14 @@ def build_payload(**kwargs):
             payload.update({param: kwargs[param]})
 
     return payload
+
+
+def validate_arg_pattern(name, value, pattern):
+    try:
+        re.compile(pattern)
+        re.fullmatch(value)
+    except:
+        raise AxwayModuleError("The argument {0} doesn't match the expected pattern {1}".format(name, pattern))
 
 
 class Noop(object):
