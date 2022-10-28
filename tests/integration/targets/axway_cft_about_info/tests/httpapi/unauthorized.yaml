@@ -1,9 +1,9 @@
 ---
-- name: Gathering facts - invalid credentials
+- name: Gathering info - invalid credentials
   vars:
     ansible_user: dummy
     ansible_password: dummy
-  community.axway_cft.axway_cft_facts:
+  community.axway_cft.axway_cft_about_info:
   register: result
   ignore_errors: True
 
@@ -16,11 +16,11 @@
     - result.failed
     - result.msg == exp.msg
 
-- name: Gathering facts - invalid rights
+- name: Gathering info - invalid rights
   vars:
     ansible_user: admin
     ansible_password: dummy
-  community.axway_cft.axway_cft_facts:
+  community.axway_cft.axway_cft_about_info:
   register: result
   ignore_errors: True
 

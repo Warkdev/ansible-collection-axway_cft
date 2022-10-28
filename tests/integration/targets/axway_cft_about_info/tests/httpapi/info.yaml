@@ -1,0 +1,25 @@
+---
+- name: Gathering info
+  community.axway_cft.axway_cft_about_info:
+  register: result
+
+- name: Validate info
+  assert:
+    that:
+    - result.about_info is defined
+    - result.about_info.version is defined
+    - result.about_info.version == '3.3.2'
+    - result.about_info.level is defined
+    - result.about_info.level == ''
+    - result.about_info.system is defined
+    - result.about_info.system == 'unix'
+    - result.about_info.server_time is defined
+    - result.about_info.server_time == '1526301034000'
+    - result.about_info.server_utc is defined
+    - result.about_info.server_utc == '2'
+    - result.about_info.multinode_enabled is defined
+    - not (result.about_info.multinode_enabled | bool)
+    - result.about_info.cg_enabled is defined
+    - not (result.about_info.cg_enabled | bool)
+    - result.about_info.instance_id is defined
+    - result.about_info.instance_id == 'workstationaddress'

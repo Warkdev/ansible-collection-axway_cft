@@ -10,63 +10,69 @@ __metaclass__ = type
 
 DOCUMENTATION = r'''
 ---
-module: axway_cft_facts
+module: axway_cft_about_info
 short_description: Get the version of Axway Transfer CFT
 description:
   - Get the version of Axway Transfer CFT.
 version_added: "1.0.0"
 author:
   - Cédric Servais (@7893254)
+options: {}
 extends_documentation_fragment:
   - community.axway_cft.logging_info_options
 '''
 
 EXAMPLES = r'''
 - name: Collect Axway Transfer CFT version
-  axway_cft_facts:
+  axway_cft_about_info:
 '''
 
 RETURN = r'''
-axway_cft_version:
-  description: The version of the CFT
+about_info:
+  description: Dictionnary about Axway Transfer CFT Server
   returned: always
-  type: str
-  sample: "3.3.2"
-axway_cft_level:
-  description: The level of CFT, SP and patch
-  returned: always
-  type: str
-  sample: ""
-axway_cft_system:
-  description: System running CFT
-  returned: always
-  type: str
-  sample: "unix"
-axway_cft_server_time:
-  description: Local time on CFT server
-  returned: always
-  type: str
-  sample: "1526301034000"
-axway_cft_server_utc:
-  description: UTC Timezone on CFT server
-  returned: always
-  type: str
-  sample: "2"
-axway_cft_multinode_enabled:
-  description: CFT is in mutinode mode
-  returned: always
-  type: bool
-  sample: True
-axway_cft_cg_enabled:
-  description: CFT is controlled by Control Governance
-  returned: always
-  type: bool
-  sample: False
-axway_cft_instance_id:
-  description: The instance ID of CFT
-  returned: always
-  type: str
-  sample: "workstationaddress"
+  type: dict
+  contains:
+    cft_version:
+      description: The version of the CFT
+      returned: always
+      type: str
+      sample: "3.3.2"
+    cft_level:
+      description: The level of CFT, SP and patch
+      returned: always
+      type: str
+      sample: ""
+    cft_system:
+      description: System running CFT
+      returned: always
+      type: str
+      sample: "unix"
+    cft_server_time:
+      description: Local time on CFT server
+      returned: always
+      type: str
+      sample: "1526301034000"
+    cft_server_utc:
+      description: UTC Timezone on CFT server
+      returned: always
+      type: str
+      sample: "2"
+    multinode_enabled:
+      description: CFT is in mutinode mode
+      returned: always
+      type: bool
+      sample: True
+    cft_cg_enabled:
+      description: CFT is controlled by Control Governance
+      returned: always
+      type: bool
+      sample: False
+    cft_instance_id:
+      description: The instance ID of CFT
+      returned: always
+      type: str
+      sample: "workstationaddress"
 '''
 
 import logging
@@ -105,17 +111,17 @@ def __exec_get_facts(module):
 
 def exec_module(module):
     response = __exec_get_facts(module=module)
-    ansible_facts = {
-        'axway_cft_version': response['version'],
-        'axway_cft_level': response['level'],
-        'axway_cft_system': response['system'],
-        'axway_cft_server_time': response['server_time'],
-        'axway_cft_server_utc': response['server_utc'],
-        'axway_cft_multinode_enabled': bool(flattened_to_bool(response['multinode_enabled'])),
-        'axway_cft_cg_enabled': bool(flattened_to_bool(response['cg_enabled'])),
-        'axway_cft_instance_id': response['instance_id']
+    about_info = {
+        'version': response['version'],
+        'level': response['level'],
+        'system': response['system'],
+        'server_time': response['server_time'],
+        'server_utc': response['server_utc'],
+        'multinode_enabled': bool(flattened_to_bool(response['multinode_enabled'])),
+        'cg_enabled': bool(flattened_to_bool(response['cg_enabled'])),
+        'instance_id': response['instance_id']
     }
-    return {'ansible_facts': ansible_facts}
+    return {'changed': False, 'about_info': about_info}
 
 
 def main():
