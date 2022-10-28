@@ -24,8 +24,8 @@ def fetch_cftdest(module, offset=0, limit=100):
     Returns:
         _type_: _description_
     """
-    path = '{}?offset={}&limit={}'.format(uri, offset, limit)
-    logger.debug('Calling path {}'.format(path))
+    path = '{0}?offset={1}&limit={2}'.format(uri, offset, limit)
+    logger.debug('Calling path %s', path)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path)
 

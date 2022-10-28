@@ -2,8 +2,8 @@
     "docs": "https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/shebang.html", 
     "results": [
         {
-            "message": "The test `ansible-test sanity --test shebang` [[explain](https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/shebang.html)] failed with 1 error:", 
-            "output": "plugins/doc_fragments/logging_info_options.py:1:1: unexpected non-module shebang: b'#!/usr/bin/python'"
+            "message": "The test `ansible-test sanity --test shebang` [[explain](https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/shebang.html)] failed with 2 errors:", 
+            "output": "integration.sh:1:1: unexpected non-module shebang: b'#!/bin/bash'\nsanity.sh:1:1: unexpected non-module shebang: b'#!/bin/bash'"
         }
     ], 
     "verified": false

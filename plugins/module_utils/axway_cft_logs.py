@@ -25,8 +25,8 @@ def fetch_cftdest(module, severity=None, limit=None, datetimemin=None, datetimem
         _type_: _description_
     """
     query_str = build_query_str(severity=severity, limit=limit, datetimemin=datetimemin, datetimemax=datetimemax, pattern=pattern)
-    path = '{}?{}'.format(uri, query_str)
-    logger.debug('Calling path {}'.format(path))
+    path = '{0}?{1}'.format(uri, query_str)
+    logger.debug('Calling path %s', path)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path)
 

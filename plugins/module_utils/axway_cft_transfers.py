@@ -24,8 +24,8 @@ def fetch_transfer(module, idtu):
     Returns:
         __type__: _description
     """
-    path='{}/{}'.format(uri, idtu)
-    logger.debug('Calling path {}'.format(path))
+    path = '{0}/{1}'.format(uri, idtu)
+    logger.debug('Calling path %s', path)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path)
 
@@ -41,9 +41,10 @@ def fetch_transfers(module, ida=None, idtu=None, idt=None, nidt=None, part=None,
     Returns:
         _type_: _description_
     """
-    query_str = build_query_str(ida=ida, idtu=idtu, idt=idt, nidt=nidt, part=part, idf=idf, phase=phase, phasestep=phasestep, fields=fields, offset=offset, limit=limit)
-    path = '{}?{}'.format(uri, query_str)
-    logger.debug('Calling path {}'.format(path))
+    query_str = build_query_str(ida=ida, idtu=idtu, idt=idt, nidt=nidt, part=part, idf=idf,
+                                phase=phase, phasestep=phasestep, fields=fields, offset=offset, limit=limit)
+    path = '{0}?{1}'.format(uri, query_str)
+    logger.debug('Calling path %s', path)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path)
 
@@ -57,8 +58,8 @@ def delete_transfer(module, idtu):
     """Deletes a given transfer.
 
     """
-    path='{}/{}'.format(uri, idtu)
-    logger.debug('Calling path {}'.format(path))
+    path = '{0}/{1}'.format(uri, idtu)
+    logger.debug('Calling path %s', path)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='DELETE')
 
@@ -72,8 +73,8 @@ def halt_transfer(module, idtu):
     """Interrupts a given transfer.
 
     """
-    path='{}/{}/halt'.format(uri, idtu)
-    logger.debug('Calling path {}'.format(path))
+    path = '{0}/{1}/halt'.format(uri, idtu)
+    logger.debug('Calling path %s', path)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='PUT')
 
@@ -87,8 +88,8 @@ def keep_transfer(module, idtu):
     """Suspends a given transfer.
 
     """
-    path='{}/{}/keep'.format(uri, idtu)
-    logger.debug('Calling path {}'.format(path))
+    path = '{0}/{1}/keep'.format(uri, idtu)
+    logger.debug('Calling path %s', path)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='PUT')
 
@@ -102,8 +103,8 @@ def start_transfer(module, idtu):
     """Restarts a given transfer.
 
     """
-    path='{}/{}/start'.format(uri, idtu)
-    logger.debug('Calling path {}'.format(path))
+    path = '{0}/{1}/start'.format(uri, idtu)
+    logger.debug('Calling path %s', path)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='PUT')
 
@@ -117,8 +118,8 @@ def resume_transfer(module, idtu):
     """Resumes a given transfer.
 
     """
-    path='{}/{}/resume'.format(uri, idtu)
-    logger.debug('Calling path {}'.format(path))
+    path = '{0}/{1}/resume'.format(uri, idtu)
+    logger.debug('Calling path %s', path)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='PUT')
 
@@ -132,8 +133,8 @@ def submit_transfer(module, idtu):
     """Submits a processing procedure for a given transfer
 
     """
-    path='{}/{}/resume'.format(uri, idtu)
-    logger.debug('Calling path {}'.format(path))
+    path = '{0}/{1}/resume'.format(uri, idtu)
+    logger.debug('Calling path %s', path)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='PUT')
 
@@ -147,8 +148,8 @@ def ack_transfer(module, idtu):
     """Acknowledges a given transfer.
 
     """
-    path='{}/{}/ack'.format(uri, idtu)
-    logger.debug('Calling path {}'.format(path))
+    path = '{0}/{1}/ack'.format(uri, idtu)
+    logger.debug('Calling path %s', path)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='PUT')
 
@@ -162,8 +163,8 @@ def nack_transfer(module, idtu):
     """Acknowledges negatively a given transfer.
 
     """
-    path='{}/{}/nack'.format(uri, idtu)
-    logger.debug('Calling path {}'.format(path))
+    path = '{0}/{1}/nack'.format(uri, idtu)
+    logger.debug('Calling path %s', path)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='PUT')
 
@@ -177,8 +178,8 @@ def end_transfer(module, idtu):
     """Ends a given transfer.
 
     """
-    path='{}/{}/end'.format(uri, idtu)
-    logger.debug('Calling path {}'.format(path))
+    path = '{0}/{1}/end'.format(uri, idtu)
+    logger.debug('Calling path %s', path)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='PUT')
 
@@ -194,9 +195,9 @@ def create_send_file_transfer_request(module, partner, idf=None, apitimeout=None
     """
     query_str = build_query_str(part=partner, idf=idf, apitimeout=apitimeout)
     payload = build_payload(ida=ida, fname=fname, parm=parm)
-    path='{}/files/outgoings'.format(uri)
-    logger.debug('Calling path {}'.format(path))
-    logger.debug('Payload content: {}'.format(payload))
+    path = '{0}/files/outgoings'.format(uri)
+    logger.debug('Calling path %s', path)
+    logger.debug('Payload content: %s', payload)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='POST', payload=payload)
 
@@ -212,9 +213,9 @@ def create_receive_file_transfer_request(module, partner, idf=None, apitimeout=N
     """
     query_str = build_query_str(part=partner, idf=idf, apitimeout=apitimeout)
     payload = build_payload(ida=ida, fname=fname, parm=parm)
-    path='{}/files/incomings'.format(uri)
-    logger.debug('Calling path {}'.format(path))
-    logger.debug('Payload content: {}'.format(payload))
+    path = '{0}/files/incomings'.format(uri)
+    logger.debug('Calling path %s', path)
+    logger.debug('Payload content: %s', payload)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='POST', payload=payload)
 
@@ -230,9 +231,9 @@ def create_message_transfer_request(module, partner, idm, msg, apitimeout=None, 
     """
     query_str = build_query_str(part=partner, idm=idm, apitimeout=apitimeout)
     payload = build_payload(ida=ida, msg=msg)
-    path='{}/messages'.format(uri)
-    logger.debug('Calling path {}'.format(path))
-    logger.debug('Payload content: {}'.format(payload))
+    path = '{0}/messages'.format(uri)
+    logger.debug('Calling path %s', path)
+    logger.debug('Payload content: %s', payload)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='POST', payload=payload)
 
