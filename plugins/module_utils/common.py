@@ -13,12 +13,6 @@ from ansible.module_utils.parsing.convert_bool import (
 import re
 
 
-def logging_argument_spec():
-    return dict(
-        log_level=dict(type='str', default='INFO', choices=['CRITICAL', 'FATAL', 'ERROR', 'WARN', 'WARNING', 'INFO', 'DEBUG', 'NOTSET'])
-    )
-
-
 def flattened_to_bool(value):
     return flatten_boolean(value) == 'yes'
 
@@ -37,7 +31,7 @@ def flatten_boolean(value):
 def build_query_str(**kwargs):
     query_str = ''
     for param in kwargs:
-        if param:
+        if kwargs[param]:
             query_str = '{0}&{1}={2}'.format(query_str, param, kwargs[param])
 
     return query_str[1:]  # Remove leading '&' character
@@ -46,7 +40,7 @@ def build_query_str(**kwargs):
 def build_payload(**kwargs):
     payload = {}
     for param in kwargs:
-        if param:
+        if kwargs[param]:
             payload.update({param: kwargs[param]})
 
     return payload
@@ -56,7 +50,7 @@ def validate_arg_pattern(name, value, pattern):
     try:
         re.compile(pattern)
         re.fullmatch(value)
-    except:
+    except Exception:
         raise AxwayModuleError("The argument {0} doesn't match the expected pattern {1}".format(name, pattern))
 
 

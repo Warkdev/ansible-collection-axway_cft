@@ -18,13 +18,13 @@ uri = '/logs'
 logger = logging.getLogger(__name__)
 
 
-def fetch_logs(module, severity=None, limit=None, datetimemin=None, datetimemax=None, pattern=None):
+def fetch_logs(module, severity=None, limit=None, date_time_min=None, date_time_max=None, pattern=None):
     """ Retrieves the logs corresponding to the criterias
 
     Returns:
         _type_: _description_
     """
-    query_str = build_query_str(severity=severity, limit=limit, datetimemin=datetimemin, datetimemax=datetimemax, pattern=pattern)
+    query_str = build_query_str(severity=severity, limit=limit, datetimemin=date_time_min, datetimemax=date_time_max, pattern=pattern)
     path = '{0}?{1}'.format(uri, query_str)
     logger.debug('Calling path %s', path)
     connection = Connection(module._socket_path)

@@ -1,23 +1,50 @@
 ---
-- name: Gathering facts
-  community.axway_cft.axway_cft_facts:
+- name: Gather logs
+  community.axway_cft.axway_cft_logs:
+  register: cft_logs
 
-- name: Validate facts
+- name: Validate received logs
+  vars:
+    expected_log:
+      node: mynode
+      severity: F
+      code: messagecode
+      date: "2014-08-29T12:45:08Z"
+      message: sample log
   assert:
     that:
-    - axway_cft_version is defined
-    - axway_cft_version == '3.3.2'
-    - axway_cft_level is defined
-    - axway_cft_level == ''
-    - axway_cft_system is defined
-    - axway_cft_system == 'unix'
-    - axway_cft_server_time is defined
-    - axway_cft_server_time == '1526301034000'
-    - axway_cft_server_utc is defined
-    - axway_cft_server_utc == '2'
-    - axway_cft_multinode_enabled is defined
-    - not (axway_cft_multinode_enabled | bool)
-    - axway_cft_cg_enabled is defined
-    - not (axway_cft_cg_enabled | bool)
-    - axway_cft_instance_id is defined
-    - axway_cft_instance_id == 'workstationaddress'
+    - cft_logs.logs is defined
+    - (cft_logs.logs | length) == 1
+    - cft_logs.logs[0].node == expected_log.node
+    - cft_logs.logs[0].severity == expected_log.severity
+    - cft_logs.logs[0].code == expected_log.code
+    - cft_logs.logs[0].date == expected_log.date
+    - cft_logs.logs[0].message == expected_log.message
+
+- name: Gather logs to file
+  community.axway_cft.axway_cft_logs:
+    dest: "{{ playbook_dir }}/temp.log"
+  register: cft_logs
+
+- name: Validate returned response
+  assert:
+    that:
+    - cft_logs.changed
+
+- name: Gather temp file content
+  command: "cat {{ playbook_dir }}/temp.log"
+  register: result
+
+- name: Print file content
+  debug:
+    msg: "{{ result.stdout }}"
+
+- name: Gather logs to file - idempotency
+  community.axway_cft.axway_cft_logs:
+    dest: "{{ playbook_dir }}/temp.log"
+  register: cft_logs
+
+- name: Validate returned response
+  assert:
+    that:
+    - not cft_logs.changed

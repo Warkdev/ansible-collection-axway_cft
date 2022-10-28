@@ -18,72 +18,69 @@ version_added: "1.0.0"
 author:
   - Cédric Servais (@7893254)
 options:
-  severity:
-    description: Severity of the log to return
-    type: str
-    choices: ['F', 'E', 'W', 'I']
-  limit:
-    description: Maximum number of lines to display
-    type: int
-  date_time_min:
-    description: Use to display logs that happened on or after this start date and time YYYY-MM-DDThh:mm:ssZ
-    type: str
-  date_time_max:
-    description: Use to display logs that happened on or before this end date and time YYYY-MM-DDThh:mm:ssZ
-    type: str
-  pattern:
-    description: Only displays the log lines that match this specific pattern; enter any pattern with a maximum of 63 characters
-    type: str
+    severity:
+        description: Severity of the log to return
+        type: str
+        choices: ['F', 'E', 'W', 'I']
+    limit:
+        description: Maximum number of lines to display
+        type: int
+    date_time_min:
+        description: Use to display logs that happened on or after this start date and time YYYY-MM-DDThh:mm:ssZ
+        type: str
+    date_time_max:
+        description: Use to display logs that happened on or before this end date and time YYYY-MM-DDThh:mm:ssZ
+        type: str
+    pattern:
+        description: Only displays the log lines that match this specific pattern; enter any pattern with a maximum of 63 characters
+        type: str
+    dest:
+        description: A filepath where the returned log messages must be dumped; they will be dumped under the form [date] node severity code message
+        type: str
 extends_documentation_fragment:
   - community.axway_cft.logging_info_options
 '''
 
 EXAMPLES = r'''
-- name: Gathering log entries matching Warning state
+- name: Gather log entries matching Warning state
   axway_cft_logs:
     severity: W
 
-- name: Gathering log entries from 01-01-1970 to 30-01-1970
+- name: Gather log entries from 01-01-1970 to 30-01-1970
   axway_cft_logs:
     date_time_min: 1970-01-01T00:00:00Z
     date_time_max: 1970-01-30T23:59:59Z
 
-- name: Gathering log entries matching the pattern "transfer error"
+- name: Gather log entries matching the pattern "transfer error"
   axway_cft_logs:
     pattern: ".*transfer error.*"
+
+- name: Gather and dump log messages to file
+  axway_cft_logs:
+    dest: "/tmp/messages.log"
 '''
 
 RETURN = r'''
 logs:
-  description: A list of log messages corresponding to the matching criteria's
-  returned: always
-  type: list
-  contains:
-    node:
-      description: The CFT node
-      type: str
-      sample: "cftnode"
-    severity:
-      description: Message severity
-      type: str
-      sample: "W"
-    code:
-      description: Message code
-      type: str
-      sample: "99"
-    date:
-      description: Message date
-      type: str
-      sample: "1970-01-01T00:00:00Z
-    message:
-      description: The log message
-      type str
-      sample: "This is a log message"
+    description: A list of log messages corresponding to the matching criteria's
+    returned: always
+    type: list
+    elements: dict
+    sample:
+        - node: "cftnode"
+          severity: "W"
+          code: "99"
+          date: "1970-01-01T00:00:00Z"
+          message: "This is a log message"
 '''
 
 import logging
+import shutil
+import os.path
+import tempfile
 from io import StringIO
 
+from ansible.module_utils._text import to_bytes
 from ansible.module_utils.basic import AnsibleModule
 
 from ansible_collections.community.axway_cft.plugins.module_utils.axway_cft_logs import fetch_logs
@@ -93,7 +90,7 @@ from ansible_collections.community.axway_cft.plugins.module_utils.axway_utils im
 )
 
 from ansible_collections.community.axway_cft.plugins.module_utils.common import (
-    validate_arg_pattern, logging_argument_spec
+    validate_arg_pattern
 )
 
 logger = logging.getLogger(__name__)
@@ -105,15 +102,16 @@ class ArgumentSpec(object):
     def __init__(self):
         self.supports_check_mode = True
         argument_spec = dict(
-          severity=dict(type='str', choices=['F', 'E', 'W', 'I']),
-          limit=dict(type='int'),
-          date_time_min=dict(type='str'),
-          date_time_max=dict(type='str'),
-          pattern=dict(type='str')
+            severity=dict(type='str', choices=['F', 'E', 'W', 'I']),
+            limit=dict(type='int'),
+            date_time_min=dict(type='str'),
+            date_time_max=dict(type='str'),
+            pattern=dict(type='str'),
+            dest=dict(type='str'),
+            force=dict(type='bool')
         )
         self.argument_spec = {}
         self.argument_spec.update(argument_spec)
-        self.argument_spec.update(logging_argument_spec())
 
 
 def __exec_get(module, **kwargs):
@@ -122,19 +120,45 @@ def __exec_get(module, **kwargs):
 
 
 def exec_module(module):
+    force = module.params.pop('force')
+    dest = module.params.pop('dest')
+
     for arg in ['date_time_min', 'date_time_max']:
-      if arg in module.params:
-        validate_arg_pattern(name=arg, value=module.params[arg], pattern=r'^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$')
+        if arg in module.params and module.params[arg]:
+            validate_arg_pattern(name=arg, value=module.params[arg], pattern=r'^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$')
 
     for arg in ['pattern']:
-      if arg in module.params:
-        validate_arg_pattern(name=arg, value=module.params[arg], pattern=r'^[a-zA-Z]{1,5}$')
+        if arg in module.params and module.params[arg]:
+            validate_arg_pattern(name=arg, value=module.params[arg], pattern=r'^[a-zA-Z]{1,5}$')
 
-    response = __exec_get(module=module, **module.params)
+    if dest:  # This means we need to copy logs to file
+        b_dest = to_bytes(dest, errors='surrogate_or_strict')
+        response = __exec_get(module=module, **module.params)
 
-    return_value = create_return_object()
+        dummy, b_mydest = tempfile.mkstemp(dir=os.path.dirname(b_dest))
 
-    return return_value.update({'logs': response['logs']})
+        with open(b_mydest, mode='wb') as f_dest:
+            for record in response['logs']:
+                f_dest.write(str.encode('[{0}] {1} {2} {3} {4}'.format(record['date'], record['node'], record['severity'], record['code'], record['message'])))
+
+        checksum_dest = module.sha1(b_mydest)
+
+        if os.path.isfile(b_dest):
+            checksum_src = module.sha1(b_dest)
+        else:
+            checksum_src = None
+
+        if force or checksum_dest != checksum_src:
+            if not module.check_mode:
+                shutil.copyfile(b_mydest, b_dest)
+
+            return {'changed': True}
+        else:
+            return {}
+
+    else:
+        response = __exec_get(module=module, **module.params)
+        return {'logs': response['logs']}
 
 
 def main():

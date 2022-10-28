@@ -3,7 +3,7 @@
     "results": [
         {
             "message": "The test `ansible-test sanity --test pylint` [[explain](https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/pylint.html)] failed with 2 errors:", 
-            "output": "plugins/module_utils/axway_cft_objects_cftrecv.py:27:11: ansible-format-automatic-specification: Format string contains automatic field numbering specification\nplugins/module_utils/axway_cft_objects_cftsend.py:27:11: ansible-format-automatic-specification: Format string contains automatic field numbering specification"
+            "output": "plugins/modules/axway_cft_logs.py:152:8: disallowed-name: Disallowed name \"_\"\nplugins/modules/axway_cft_logs.py:168:0: trailing-whitespace: Trailing whitespace"
         }
     ], 
     "verified": false

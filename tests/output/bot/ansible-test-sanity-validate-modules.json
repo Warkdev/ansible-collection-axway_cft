@@ -2,8 +2,8 @@
     "docs": "https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/validate-modules.html", 
     "results": [
         {
-            "message": "The test `ansible-test sanity --test validate-modules` [[explain](https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/validate-modules.html)] failed with 1 error:", 
-            "output": "plugins/httpapi/axway_cft.py:0:0: module-invalid-version-added: DOCUMENTATION: version_added ('1.0') is not a valid collection version (see specification at https://semver.org/): invalid semantic version '1.0'. Got {'author': ['C\u00e9dric Servais (@7893254)'], 'name': 'axway_cft', 'short_description': 'HttpApi Plugin for Axway CFT', 'description': ['This HttpApi plugin provides methods to connect to Axway CFT devices over a HTTP(S)-based api.'], 'version_added': '1.0', 'version_added_collection': 'community.axway_cft'}"
+            "message": "The test `ansible-test sanity --test validate-modules` [[explain](https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/validate-modules.html)] failed with 4 errors:", 
+            "output": "plugins/modules/axway_cft_about_info.py:0:0: nonexistent-parameter-documented: Argument 'log_level' is listed in DOCUMENTATION.options, but not accepted by the module argument_spec\nplugins/modules/axway_cft_logs.py:0:0: nonexistent-parameter-documented: Argument 'log_level' is listed in DOCUMENTATION.options, but not accepted by the module argument_spec\nplugins/modules/axway_cft_logs.py:0:0: parameter-type-not-in-doc: Argument 'force' in argument_spec defines type as 'bool' but documentation doesn't define type\nplugins/modules/axway_cft_logs.py:0:0: undocumented-parameter: Argument 'force' is listed in the argument_spec, but not documented in the module documentation"
         }
     ], 
     "verified": false

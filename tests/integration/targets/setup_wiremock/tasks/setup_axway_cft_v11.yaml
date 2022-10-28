@@ -4,6 +4,11 @@
     name: "{{ setup_wiremock_docker_image }}"
     source: pull
 
+- name: Check Wiremock container
+  community.docker.docker_container_info:
+    name: axway_cft_api_v11
+  register: result
+
 - name: Create Wiremock container
   community.docker.docker_container:
     name: axway_cft_api_v11
@@ -14,6 +19,8 @@
     - "{{ role_path }}/files/axway_cft_v11:/home/wiremock"
     command: "--disable-http --https-port 8443"
     state: started
+  when:
+  - not result.exists or not result.container.State.Running
 
 - name: Wait for Wiremock service to be up
   wait_for:

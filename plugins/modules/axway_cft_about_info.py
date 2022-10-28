@@ -87,7 +87,7 @@ from ansible_collections.community.axway_cft.plugins.module_utils.axway_utils im
 )
 
 from ansible_collections.community.axway_cft.plugins.module_utils.common import (
-    flattened_to_bool, logging_argument_spec
+    flattened_to_bool
 )
 
 logger = logging.getLogger(__name__)
@@ -101,7 +101,6 @@ class ArgumentSpec(object):
         argument_spec = dict()
         self.argument_spec = {}
         self.argument_spec.update(argument_spec)
-        self.argument_spec.update(logging_argument_spec())
 
 
 def __exec_get_facts(module):
