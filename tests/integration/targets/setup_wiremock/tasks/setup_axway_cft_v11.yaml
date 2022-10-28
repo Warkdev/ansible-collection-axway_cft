@@ -14,3 +14,8 @@
     - "{{ role_path }}/files/axway_cft_v11:/home/wiremock"
     command: "--disable-http --https-port 8443"
     state: started
+
+- name: Wait for Wiremock service to be up
+  wait_for:
+    host: localhost
+    port: 8443
