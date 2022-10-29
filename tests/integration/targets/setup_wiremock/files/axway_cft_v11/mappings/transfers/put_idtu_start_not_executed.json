@@ -1,17 +1,7 @@
 {
     "request": {
         "method": "PUT",
-        "urlPathPattern": "/transfers/(.*)/nack",
-        "queryParameters": {
-            "idm": {
-                "matches": ".*"
-            }
-        },
-        "bodyPatterns": [
-            {
-                "matchesJsonPath": "$.msg"
-            }
-        ],
+        "urlPathPattern": "/transfers/T1234561/start",
         "headers": {
             "Accept": {
                 "equalTo": "application/json"
@@ -23,7 +13,7 @@
         }
     },
     "response": {
-        "status": 200,
+        "status": 202,
         "headers": {
             "Content-Type": "application/json"
         }

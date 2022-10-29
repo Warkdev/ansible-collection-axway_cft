@@ -1,8 +1,7 @@
 {
-    "priority": 1,
     "request": {
         "method": "PUT",
-        "urlPathPattern": "/transfers/T1234567/nack",
+        "urlPathPattern": "/transfers/T1234561/nack",
         "queryParameters": {
             "idm": {
                 "matches": ".*"
@@ -24,11 +23,7 @@
         }
     },
     "response": {
-        "status": 404,
-        "jsonBody": {
-            "code": 99,
-            "message": "Additional error details."
-        },
+        "status": 202,
         "headers": {
             "Content-Type": "application/json"
         }

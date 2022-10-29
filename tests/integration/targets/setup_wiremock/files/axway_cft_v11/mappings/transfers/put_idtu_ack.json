@@ -2,6 +2,16 @@
     "request": {
         "method": "PUT",
         "urlPathPattern": "/transfers/(.*)/ack",
+        "queryParameters": {
+            "idm": {
+                "matches": ".*"
+            }
+        },
+        "bodyPatterns": [
+            {
+                "matchesJsonPath": "$.msg"
+            }
+        ],
         "headers": {
             "Accept": {
                 "equalTo": "application/json"
