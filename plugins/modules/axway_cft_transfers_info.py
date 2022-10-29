@@ -134,9 +134,6 @@ transfers:
 '''
 
 import logging
-import shutil
-import os.path
-import tempfile
 from io import StringIO
 
 from ansible.module_utils.basic import AnsibleModule
