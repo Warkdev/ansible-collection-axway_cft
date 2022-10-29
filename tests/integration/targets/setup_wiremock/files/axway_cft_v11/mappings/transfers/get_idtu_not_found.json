@@ -16,7 +16,7 @@
     "response": {
         "status": 404,
         "jsonBody": {
-            "code": "99",
+            "code": 99,
             "message": "Additional error details."
         },
         "headers": {

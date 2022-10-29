@@ -52,7 +52,7 @@
             "phase": "K",
             "phasestep": "Z",
             "ida": "T1234567",
-            "diagi": "99",
+            "diagi": 99,
             "diagp": "0",
             "links": {
                 "rel": "self",
