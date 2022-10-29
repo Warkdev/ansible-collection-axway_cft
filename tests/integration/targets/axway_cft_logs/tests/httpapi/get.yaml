@@ -48,3 +48,14 @@
   assert:
     that:
     - not cft_logs.changed
+
+- name: Gather logs to file - force
+  community.axway_cft.axway_cft_logs:
+    dest: "{{ playbook_dir }}/temp.log"
+    force: True
+  register: cft_logs
+
+- name: Validate returned response
+  assert:
+    that:
+    - cft_logs.changed
