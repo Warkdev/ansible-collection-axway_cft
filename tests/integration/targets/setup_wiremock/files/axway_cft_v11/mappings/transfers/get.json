@@ -84,13 +84,27 @@
                 ]
             },
             "fields": {
-                "matches": "\b(?:PART|DIRECT|TYPE|COMPATSTATE|ACK|STATE|PHASE|PHASESTEP|IDF|IDT|IDTU|PIDTU|NREC|FREC|MSG|DIAGI|DIAGP|REQUSER|REQGROUP|IDA)\b"
+                "matches": "^(.*)$"
             },
             "offset": {
-                "matches": "^[0-9]+$"
+                "or": [
+                    {
+                        "matches": "^[0-9]+$"
+                    },
+                    {
+                        "absent": true
+                    }
+                ]
             },
             "limit": {
-                "matches": "^[0-9]+$"
+                "or": [
+                    {
+                        "matches": "^[0-9]+$"
+                    },
+                    {
+                        "absent": true
+                    }
+                ]
             }
         },
         "headers": {
@@ -128,6 +142,28 @@
                 "requser": "cft_user",
                 "reqgroup": "cft_group",
                 "ida": "2596373"
+                },
+                {
+                "partner": "NEWYORK",
+                "direct": "receive",
+                "type": "file",
+                "compatstate": "state",
+                "ack": "ack",
+                "state": "state",
+                "phase": "K",
+                "phasestep": "E",
+                "idf": "ABCD",
+                "idt": "A0112103",
+                "idtu": "A000004E",
+                "pidtu": "A000004E",
+                "nrec": "89",
+                "frec": "105",
+                "msg": "My tailor is not rich",
+                "diagi": "0",
+                "diagp": "",
+                "requser": "cft_user",
+                "reqgroup": "cft_group",
+                "ida": "2596378"
                 }
             ],
             "numberOfSelectedRecords": 50,

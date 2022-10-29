@@ -11,7 +11,10 @@ from ansible.module_utils.parsing.convert_bool import (
 )
 
 import re
-
+try:
+    from urllib.parse import quote_plus
+except:
+    from urllib import quote_plus #  Python 2 fallback
 
 def flattened_to_bool(value):
     return flatten_boolean(value) == 'yes'
@@ -32,7 +35,10 @@ def build_query_str(**kwargs):
     query_str = ''
     for param in kwargs:
         if kwargs[param]:
-            query_str = '{0}&{1}={2}'.format(query_str, param, kwargs[param])
+            if isinstance(kwargs[param], str) or isinstance(kwargs[param], int):
+                query_str = '{0}&{1}={2}'.format(query_str, param, kwargs[param])
+            elif isinstance(kwargs[param], list):
+                query_str = '{0}&{1}={2}'.format(query_str, param, quote_plus(','.join(kwargs[param])))
 
     return query_str[1:]  # Remove leading '&' character
 
