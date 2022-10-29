@@ -77,6 +77,7 @@ logs:
 
 import logging
 import shutil
+import os
 import os.path
 import tempfile
 from io import StringIO
@@ -140,7 +141,7 @@ def exec_module(module):
 
         with open(b_mydest, mode='wb') as f_dest:
             for record in response['logs']:
-                f_dest.write(str.encode('[{0}] {1} {2} {3} {4}'.format(record['date'], record['node'], record['severity'], record['code'], record['message'])))
+                f_dest.write(str.encode('[{0}] {1} {2} {3} {4}{5}'.format(record['date'], record['node'], record['severity'], record['code'], record['message'], os.linesep)))
 
         checksum_dest = module.sha1(b_mydest)
 

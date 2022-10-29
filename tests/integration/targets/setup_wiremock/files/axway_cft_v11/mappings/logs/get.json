@@ -74,6 +74,13 @@
                     "code": "messagecode",
                     "date": "2014-08-29T12:45:08Z",
                     "message": "sample log"
+                },
+                {
+                    "node": "mynode",
+                    "severity": "F",
+                    "code": "messagecode",
+                    "date": "2014-08-30T12:45:08Z",
+                    "message": "another log"
                 }
             ]
         },

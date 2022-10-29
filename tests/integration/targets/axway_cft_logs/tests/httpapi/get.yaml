@@ -14,7 +14,7 @@
   assert:
     that:
     - cft_logs.logs is defined
-    - (cft_logs.logs | length) == 1
+    - (cft_logs.logs | length) == 2
     - cft_logs.logs[0].node == expected_log.node
     - cft_logs.logs[0].severity == expected_log.severity
     - cft_logs.logs[0].code == expected_log.code
