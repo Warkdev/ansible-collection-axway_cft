@@ -1,0 +1,34 @@
+---
+- name: Gathering logs - invalid credentials
+  vars:
+    ansible_user: dummy
+    ansible_password: dummy
+  community.axway_cft.axway_cft_logs:
+  register: result
+  ignore_errors: True
+
+- name: Validate failure
+  vars:
+    exp:
+      msg: "Axway Transfer CFT returned error 401 with message {'code': 99, 'message': 'Additional error details'}"
+  assert:
+    that:
+    - result.failed
+    - result.msg == exp.msg
+
+- name: Gathering logs - invalid rights
+  vars:
+    ansible_user: admin
+    ansible_password: dummy
+  community.axway_cft.axway_cft_logs:
+  register: result
+  ignore_errors: True
+
+- name: Validate failure
+  vars:
+    exp:
+      msg: "Axway Transfer CFT returned error 403 with message {'code': 99, 'message': 'Additional error details'}"
+  assert:
+    that:
+    - result.failed
+    - result.msg == exp.msg
