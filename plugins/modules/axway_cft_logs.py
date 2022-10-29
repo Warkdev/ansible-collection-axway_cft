@@ -76,7 +76,6 @@ logs:
 '''
 
 import logging
-import shutil
 import os
 import os.path
 import tempfile
@@ -152,7 +151,7 @@ def exec_module(module):
 
         if force or checksum_dest != checksum_src:
             if not module.check_mode:
-                shutil.copyfile(b_mydest, b_dest)
+                module.atomic_move(src=b_mydest, dest=b_dest)
 
             return {'changed': True}
         else:
