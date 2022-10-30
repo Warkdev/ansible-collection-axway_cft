@@ -63,10 +63,10 @@ def delete_transfer(module, idtu):
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='DELETE')
 
-    if response['code'] != 200:
+    if response['code'] != 200 and response['code'] != 202:
         raise AxwayModuleError(parse_fail_message(response['code'], response['contents']))
 
-    return response['contents']
+    return {'changed': response['code'] == 200}
 
 
 def halt_transfer(module, idtu):
@@ -78,10 +78,10 @@ def halt_transfer(module, idtu):
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='PUT')
 
-    if response['code'] != 200:
+    if response['code'] != 200 and response['code'] != 202:
         raise AxwayModuleError(parse_fail_message(response['code'], response['contents']))
 
-    return response['contents']
+    return {'changed': response['code'] == 200}
 
 
 def keep_transfer(module, idtu):
@@ -93,10 +93,10 @@ def keep_transfer(module, idtu):
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='PUT')
 
-    if response['code'] != 200:
+    if response['code'] != 200 and response['code'] != 202:
         raise AxwayModuleError(parse_fail_message(response['code'], response['contents']))
 
-    return response['contents']
+    return {'changed': response['code'] == 200}
 
 
 def start_transfer(module, idtu):
@@ -108,10 +108,10 @@ def start_transfer(module, idtu):
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='PUT')
 
-    if response['code'] != 200:
+    if response['code'] != 200 and response['code'] != 202:
         raise AxwayModuleError(parse_fail_message(response['code'], response['contents']))
 
-    return response['contents']
+    return {'changed': response['code'] == 200}
 
 
 def resume_transfer(module, idtu):
@@ -123,10 +123,10 @@ def resume_transfer(module, idtu):
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='PUT')
 
-    if response['code'] != 200:
+    if response['code'] != 200 and response['code'] != 202:
         raise AxwayModuleError(parse_fail_message(response['code'], response['contents']))
 
-    return response['contents']
+    return {'changed': response['code'] == 200}
 
 
 def submit_transfer(module, idtu):
@@ -138,40 +138,46 @@ def submit_transfer(module, idtu):
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='PUT')
 
-    if response['code'] != 200:
+    if response['code'] != 200 and response['code'] != 202:
         raise AxwayModuleError(parse_fail_message(response['code'], response['contents']))
 
-    return response['contents']
+    return {'changed': response['code'] == 200}
 
 
-def ack_transfer(module, idtu):
+def ack_transfer(module, idtu, idm, msg):
     """Acknowledges a given transfer.
 
     """
-    path = '{0}/{1}/ack'.format(uri, idtu)
+    query_str = build_query_str(idm=idm)
+    payload = build_payload(msg=msg)
+    path = '{0}/{1}/ack?{2}'.format(uri, idtu, query_str)
     logger.debug('Calling path %s', path)
+    logger.debug('Payload content: %s', payload)
     connection = Connection(module._socket_path)
-    response = connection.send_request(path=path, method='PUT')
+    response = connection.send_request(path=path, method='PUT', payload=payload)
 
-    if response['code'] != 200:
+    if response['code'] != 200 and response['code'] != 202:
         raise AxwayModuleError(parse_fail_message(response['code'], response['contents']))
 
-    return response['contents']
+    return {'changed': response['code'] == 200}
 
 
-def nack_transfer(module, idtu):
+def nack_transfer(module, idtu, idm, msg):
     """Acknowledges negatively a given transfer.
 
     """
-    path = '{0}/{1}/nack'.format(uri, idtu)
+    query_str = build_query_str(idm=idm)
+    payload = build_payload(msg=msg)
+    path = '{0}/{1}/nack?{2}'.format(uri, idtu, query_str)
     logger.debug('Calling path %s', path)
+    logger.debug('Payload content: %s', payload)
     connection = Connection(module._socket_path)
-    response = connection.send_request(path=path, method='PUT')
+    response = connection.send_request(path=path, method='PUT', payload=payload)
 
-    if response['code'] != 200:
+    if response['code'] != 200 and response['code'] != 202:
         raise AxwayModuleError(parse_fail_message(response['code'], response['contents']))
 
-    return response['contents']
+    return {'changed': response['code'] == 200}
 
 
 def end_transfer(module, idtu):
@@ -183,10 +189,10 @@ def end_transfer(module, idtu):
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='PUT')
 
-    if response['code'] != 200:
+    if response['code'] != 200 and response['code'] != 202:
         raise AxwayModuleError(parse_fail_message(response['code'], response['contents']))
 
-    return response['contents']
+    return {'changed': response['code'] == 200}
 
 
 def create_send_file_transfer_request(module, partner, idf=None, apitimeout=None, ida=None, fname=None, parm=None):
@@ -195,16 +201,16 @@ def create_send_file_transfer_request(module, partner, idf=None, apitimeout=None
     """
     query_str = build_query_str(part=partner, idf=idf, apitimeout=apitimeout)
     payload = build_payload(ida=ida, fname=fname, parm=parm)
-    path = '{0}/files/outgoings'.format(uri)
+    path = '{0}/files/outgoings?{1}'.format(uri, query_str)
     logger.debug('Calling path %s', path)
     logger.debug('Payload content: %s', payload)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='POST', payload=payload)
 
-    if response['code'] != 201:
+    if response['code'] != 201 and response['code'] != 202:
         raise AxwayModuleError(parse_fail_message(response['code'], response['contents']))
 
-    return response['contents']
+    return {'changed': response['code'] == 201, 'transfer': response['contents']}
 
 
 def create_receive_file_transfer_request(module, partner, idf=None, apitimeout=None, ida=None, fname=None, parm=None):
@@ -213,16 +219,16 @@ def create_receive_file_transfer_request(module, partner, idf=None, apitimeout=N
     """
     query_str = build_query_str(part=partner, idf=idf, apitimeout=apitimeout)
     payload = build_payload(ida=ida, fname=fname, parm=parm)
-    path = '{0}/files/incomings'.format(uri)
+    path = '{0}/files/incomings/{1}'.format(uri, query_str)
     logger.debug('Calling path %s', path)
     logger.debug('Payload content: %s', payload)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='POST', payload=payload)
 
-    if response['code'] != 201:
+    if response['code'] != 201 and response['code'] != 202:
         raise AxwayModuleError(parse_fail_message(response['code'], response['contents']))
 
-    return response['contents']
+    return {'changed': response['code'] == 201, 'transfer': response['contents']}
 
 
 def create_message_transfer_request(module, partner, idm, msg, apitimeout=None, ida=None):
@@ -231,13 +237,13 @@ def create_message_transfer_request(module, partner, idm, msg, apitimeout=None, 
     """
     query_str = build_query_str(part=partner, idm=idm, apitimeout=apitimeout)
     payload = build_payload(ida=ida, msg=msg)
-    path = '{0}/messages'.format(uri)
+    path = '{0}/messages?{1}'.format(uri, query_str)
     logger.debug('Calling path %s', path)
     logger.debug('Payload content: %s', payload)
     connection = Connection(module._socket_path)
     response = connection.send_request(path=path, method='POST', payload=payload)
 
-    if response['code'] != 201:
+    if response['code'] != 201 and response['code'] != 202:
         raise AxwayModuleError(parse_fail_message(response['code'], response['contents']))
 
-    return response['contents']
+    return {'changed': response['code'] == 201, 'transfer': response['contents']}
