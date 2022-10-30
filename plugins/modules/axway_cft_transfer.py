@@ -14,10 +14,15 @@ module: axway_cft_transfer
 short_description: Perform action on the given transfer.
 description:
   - Perform the given action on the transfer corresponding to the provided idtu.
+  - Note that, although check_mode is supported, this module will always return "changed" as result, 
+    this is due to lack of knowledge from how the product is working.
 version_added: "1.0.0"
 author:
   - Cédric Servais (@7893254)
 options:
+    ida:
+        description: Local transfer identifier. Can be used to create a message or a file transfer. If not provided, the server generates it.
+        type: str
     direction:
         description: Transfer direction
         type: str
@@ -70,6 +75,7 @@ EXAMPLES = r'''
 - name: Send a new transfer message
   axway_cft_transfer:
     partner: PARIS
+    ida: my_custom_id
     idm: MESSAGEID
     msg: My little message
 
@@ -164,13 +170,15 @@ from io import StringIO
 from ansible.module_utils.basic import AnsibleModule
 
 from ansible_collections.warkdev.axway_cft.plugins.module_utils.axway_cft_transfers import (
-    delete_transfer, create_message_transfer_request, create_send_file_transfer_request, create_receive_file_transfer_request,
+    delete_transfer, create_message_transfer_request, create_send_file_transfer_request, create_receive_file_transfer_request, fetch_transfer, fetch_transfers,
     halt_transfer, keep_transfer, start_transfer, submit_transfer, resume_transfer, ack_transfer, nack_transfer, end_transfer
 )
 
 from ansible_collections.warkdev.axway_cft.plugins.module_utils.axway_utils import (
     create_return_object, create_return_error, setup_logging, update_logging_info, get_traceback
 )
+
+from ansible_collections.warkdev.axway_cft.plugins.module_utils.common import AxwayModuleError
 
 logger = logging.getLogger(__name__)
 str_log = StringIO()
@@ -182,7 +190,7 @@ class ArgumentSpec(object):
         self.supports_check_mode = True
         argument_spec = dict(
             idtu=dict(type='str'),
-            state=dict(type='str', required=True, default='present', choices=['present', 'absent', 'halted', 'kept', 'started', 'resumed', 'submitted', 'acknowledged', 'nacknowledged', 'ended']),
+            state=dict(type='str', default='present', choices=['present', 'absent', 'halted', 'kept', 'started', 'resumed', 'submitted', 'acknowledged', 'nacknowledged', 'ended']),
             direction=dict(type='str', choices=['SEND', 'RECEIVE']),
             partner=dict(type='str'),
             idf=dict(type='str'),
@@ -190,7 +198,8 @@ class ArgumentSpec(object):
             filename=dict(type='str'),
             parm=dict(type='str'),
             idm=dict(type='str'),
-            msg=dict(type='str')
+            msg=dict(type='str'),
+            ida=dict(type='str')
         )
         self.argument_spec = {}
         self.argument_spec.update(argument_spec)
@@ -215,18 +224,28 @@ class ArgumentSpec(object):
             ['filename', 'msg']
         ]
         self.required_by = {
-            'direct': ['partner', 'idf', 'filename'],
+            'direction': ['partner', 'idf', 'filename'],
             'idm': ['msg']
         }
 
 
 def __exec_post(module, **kwargs):
-    if 'msg' in kwargs and kwargs['msg']:
+    cft_data = {}
+    if 'ida' in kwargs and kwargs['ida']:
+        cft_data = fetch_transfers(module, ida=kwargs['ida'])['transfers'][0]
+    if cft_data:  # Some transfer data already exist, no need to re-create
+        response = {'changed': False, 'transfer': cft_data}
+    elif 'msg' in kwargs and kwargs['msg']:
         # User trying to create a new message transfer
-        response = create_message_transfer_request(module, partner=kwargs['partner'], idm=kwargs['idm'], msg=kwargs['msg'], apitimeout=kwargs.get('api_timeout'), ida=kwargs.get('ida'))
+        if module.check_mode:
+            response = {'changed': True, 'transfer': {}}  # Change state is reported only if CFT Data doesn't exists
+        else:
+            response = create_message_transfer_request(module, partner=kwargs['partner'], idm=kwargs['idm'], msg=kwargs['msg'], apitimeout=kwargs.get('api_timeout'), ida=kwargs.get('ida'))
     elif 'filename' in kwargs and kwargs['filename']:
+        if module.check_mode:
+            response = {'changed': True, 'transfer': {}}
         # User trying to create a new file transfer
-        if kwargs['direction'] == 'SEND':
+        elif kwargs['direction'] == 'SEND':
             response = create_send_file_transfer_request(module, partner=kwargs['partner'], idf=kwargs['idf'], apitimeout=kwargs.get('api_timeout'), ida=kwargs.get('ida'), fname=kwargs['filename'], parm=kwargs.get('parm'))
         elif kwargs['direction'] == 'RECEIVE':
             response = create_receive_file_transfer_request(module, partner=kwargs['partner'], idf=kwargs['idf'], apitimeout=kwargs.get('api_timeout'), ida=kwargs.get('ida'), fname=kwargs['filename'], parm=kwargs.get('parm'))
@@ -234,7 +253,14 @@ def __exec_post(module, **kwargs):
     return response
 
 def __exec_delete(module, **kwargs):
-    response = delete_transfer(module, idtu=kwargs['idtu'])
+    try:
+        cft_data = fetch_transfer(module, idtu=kwargs['idtu'])
+    except AxwayModuleError:
+        cft_data = {}
+    if cft_data:
+        response = delete_transfer(module, idtu=kwargs['idtu'])
+    else:  # There's no matching transfer
+        response = {'changed': False, 'transfer': cft_data}
     return response
 
 

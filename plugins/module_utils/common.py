@@ -11,6 +11,7 @@ from ansible.module_utils.parsing.convert_bool import (
 )
 
 import re
+import json
 try:
     from urllib.parse import quote_plus
 except:
@@ -49,7 +50,7 @@ def build_payload(**kwargs):
         if kwargs[param]:
             payload.update({param: kwargs[param]})
 
-    return payload
+    return json.dumps(payload)
 
 
 def validate_arg_pattern(name, value, pattern):

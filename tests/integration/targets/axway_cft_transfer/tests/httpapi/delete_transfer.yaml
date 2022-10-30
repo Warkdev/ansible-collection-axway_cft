@@ -1,0 +1,22 @@
+---
+- name: Delete transfer
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: 123456789
+    state: absent
+  register: cft_transfer
+
+- name: Validate received answer
+  assert:
+    that:
+    - cft_transfer.changed
+
+- name: Delete non-existing transfer
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: T1234567
+    state: absent
+  register: cft_transfer
+
+- name: Validate received answer
+  assert:
+    that:
+    - not cft_transfer.changed

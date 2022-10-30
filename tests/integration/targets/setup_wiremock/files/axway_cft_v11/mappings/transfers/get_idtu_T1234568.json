@@ -1,7 +1,7 @@
 {
     "request": {
         "method": "GET",
-        "urlPathPattern": "/transfers/(.*)",
+        "urlPathPattern": "/transfers/T1234568",
         "headers": {
             "Accept": {
                 "equalTo": "application/json"

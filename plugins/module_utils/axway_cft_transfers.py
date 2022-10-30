@@ -219,7 +219,7 @@ def create_receive_file_transfer_request(module, partner, idf=None, apitimeout=N
     """
     query_str = build_query_str(part=partner, idf=idf, apitimeout=apitimeout)
     payload = build_payload(ida=ida, fname=fname, parm=parm)
-    path = '{0}/files/incomings/{1}'.format(uri, query_str)
+    path = '{0}/files/incomings?{1}'.format(uri, query_str)
     logger.debug('Calling path %s', path)
     logger.debug('Payload content: %s', payload)
     connection = Connection(module._socket_path)

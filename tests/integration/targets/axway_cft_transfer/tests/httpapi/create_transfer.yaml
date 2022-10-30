@@ -1,0 +1,232 @@
+---
+- name: Send new transfer message
+  warkdev.axway_cft.axway_cft_transfer:
+    partner: PARIS
+    idm: MESSAGEID
+    msg: My little message
+  register: cft_transfer
+
+- name: Validate received transfer
+  vars:
+    expected_transfer:
+      partner: PARIS
+      idf: T12345
+      idtu: IDTU1234
+      state: A
+      phase: K
+      phasestep: Z
+      ida: T1234567
+      diagi: 99
+      diagp: '0'
+      links:
+        rel: self
+        href: https://mycft/transfers/IDTU1234
+  assert:
+    that:
+    - cft_transfer.changed
+    - cft_transfer.transfer is defined
+    - cft_transfer.transfer == expected_transfer
+
+- name: Send transfer message with ida
+  warkdev.axway_cft.axway_cft_transfer:
+    ida: 2596373
+    partner: PARIS
+    idm: MESSAGEID
+    msg: My little message
+  register: cft_transfer
+
+- name: Send invalid transfer message
+  warkdev.axway_cft.axway_cft_transfer:
+    partner: PARIS
+    idm: MESSAGEID
+  register: result
+  ignore_errors: true
+
+- name: Validate received transfer
+  vars:
+    exp:
+      msg: "missing parameter(s) required by 'idm': msg"
+  assert:
+    that:
+    - result.failed
+    - result.msg == exp.msg
+
+- name: Validate received transfer
+  vars:
+    expected_transfer:
+      partner: PARIS
+      direct: send
+      type: file
+      compatstate: state
+      ack: ack
+      state: state
+      phase: T
+      phasestep: E
+      idf: ABCD
+      idt: A0112102
+      idtu: A000004K
+      pidtu: A000004K
+      nrec: '25'
+      frec: '52'
+      msg: My tailor is rich
+      diagi: '0'
+      diagp: ''
+      requser: cft_user
+      reqgroup: cft_group
+      ida: '2596373'
+  assert:
+    that:
+    - not cft_transfer.changed
+    - cft_transfer.transfer is defined
+    - cft_transfer.transfer == expected_transfer
+
+- name: Send new transfer file (SEND)
+  warkdev.axway_cft.axway_cft_transfer:
+    direction: SEND
+    partner: PARIS
+    idf: SMSU001
+    filename: C:/tmp/my_file.txt
+  register: cft_transfer
+
+- name: Validate received transfer
+  vars:
+    expected_transfer:
+      partner: NEWYORK
+      idf: T56389
+      idtu: IDTU1234
+      state: A
+      phase: K
+      phasestep: Z
+      ida: T1234567
+      diagi: 99
+      diagp: '0'
+      links:
+        rel: self
+        href: https://mycft/transfers/IDTU1234
+  assert:
+    that:
+    - cft_transfer.changed
+    - cft_transfer.transfer is defined
+    - cft_transfer.transfer == expected_transfer
+
+- name: Send transfer file using IDA (SEND)
+  warkdev.axway_cft.axway_cft_transfer:
+    ida: 2596378
+    direction: SEND
+    partner: PARIS
+    idf: SMSU001
+    filename: C:/tmp/my_file.txt
+  register: cft_transfer
+
+- name: Validate received transfer
+  vars:
+    expected_transfer:
+      partner: PARIS
+      direct: send
+      type: file
+      compatstate: state
+      ack: ack
+      state: state
+      phase: T
+      phasestep: E
+      idf: ABCD
+      idt: A0112102
+      idtu: A000004K
+      pidtu: A000004K
+      nrec: '25'
+      frec: '52'
+      msg: My tailor is rich
+      diagi: '0'
+      diagp: ''
+      requser: cft_user
+      reqgroup: cft_group
+      ida: '2596378'
+  assert:
+    that:
+    - not cft_transfer.changed
+    - cft_transfer.transfer is defined
+    - cft_transfer.transfer == expected_transfer
+
+- name: Send new transfer file (RECEIVE)
+  warkdev.axway_cft.axway_cft_transfer:
+    direction: RECEIVE
+    partner: PARIS
+    idf: SMSU001
+    filename: C:/tmp/my_file.txt
+  register: cft_transfer
+
+- name: Validate received transfer
+  vars:
+    expected_transfer:
+      partner: NEWYORK
+      idf: T56389
+      idtu: IDTU1234
+      state: A
+      phase: K
+      phasestep: Z
+      ida: T1234567
+      diagi: 99
+      diagp: '0'
+      links:
+        rel: self
+        href: https://mycft/transfers/IDTU1234
+  assert:
+    that:
+    - cft_transfer.changed
+    - cft_transfer.transfer is defined
+    - cft_transfer.transfer == expected_transfer
+
+- name: Send transfer file using IDA (RECEIVE)
+  warkdev.axway_cft.axway_cft_transfer:
+    ida: 2596379
+    direction: RECEIVE
+    partner: PARIS
+    idf: SMSU001
+    filename: C:/tmp/my_file.txt
+  register: cft_transfer
+
+- name: Validate received transfer
+  vars:
+    expected_transfer:
+      partner: PARIS
+      direct: recv
+      type: file
+      compatstate: state
+      ack: ack
+      state: state
+      phase: T
+      phasestep: E
+      idf: ABCD
+      idt: A0112102
+      idtu: A000004K
+      pidtu: A000004K
+      nrec: '25'
+      frec: '52'
+      msg: My tailor is rich
+      diagi: '0'
+      diagp: ''
+      requser: cft_user
+      reqgroup: cft_group
+      ida: '2596379'
+  assert:
+    that:
+    - not cft_transfer.changed
+    - cft_transfer.transfer is defined
+    - cft_transfer.transfer == expected_transfer
+
+- name: Send invalid transfer file
+  warkdev.axway_cft.axway_cft_transfer:
+    direction: RECEIVE
+    partner: PARIS
+    filename: C:/tmp/my_file.txt
+  register: result
+  ignore_errors: true
+
+- name: Validate received transfer
+  vars:
+    exp:
+      msg: "missing parameter(s) required by 'direction': idf"
+  assert:
+    that:
+    - result.failed
+    - result.msg == exp.msg

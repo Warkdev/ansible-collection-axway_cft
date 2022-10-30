@@ -1,0 +1,232 @@
+---
+- name: Halt transfer - Found
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: 123456789
+    state: halted
+  register: result
+
+- name: Validate action result
+  assert:
+    that:
+    - result.changed
+
+- name: Halt transfer - Not found
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: T1234567
+    state: halted
+  register: result
+  ignore_errors: True
+
+- name: Validate action result
+  vars:
+    exp:
+      msg: "Axway Transfer CFT returned error 404 with message {'code': 99, 'message': 'Additional error details.'}"
+  assert:
+    that:
+    - not result.changed
+    - result.failed
+    - result.msg == exp.msg
+
+- name: Keep transfer - Found
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: 123456789
+    state: kept
+  register: result
+
+- name: Validate action result
+  assert:
+    that:
+    - result.changed
+
+- name: Keep transfer - Not found
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: T1234567
+    state: kept
+  register: result
+  ignore_errors: True
+
+- name: Validate action result
+  vars:
+    exp:
+      msg: "Axway Transfer CFT returned error 404 with message {'code': 99, 'message': 'Additional error details.'}"
+  assert:
+    that:
+    - not result.changed
+    - result.failed
+    - result.msg == exp.msg
+
+- name: Start transfer - Found
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: 123456789
+    state: started
+  register: result
+
+- name: Validate action result
+  assert:
+    that:
+    - result.changed
+
+- name: Start transfer - Not found
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: T1234567
+    state: started
+  register: result
+  ignore_errors: True
+
+- name: Validate action result
+  vars:
+    exp:
+      msg: "Axway Transfer CFT returned error 404 with message {'code': 99, 'message': 'Additional error details.'}"
+  assert:
+    that:
+    - not result.changed
+    - result.failed
+    - result.msg == exp.msg
+
+- name: Resume transfer - Found
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: 123456789
+    state: resumed
+  register: result
+
+- name: Validate action result
+  assert:
+    that:
+    - result.changed
+
+- name: Resume transfer - Not found
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: T1234567
+    state: resumed
+  register: result
+  ignore_errors: True
+
+- name: Validate action result
+  vars:
+    exp:
+      msg: "Axway Transfer CFT returned error 404 with message {'code': 99, 'message': 'Additional error details.'}"
+  assert:
+    that:
+    - not result.changed
+    - result.failed
+    - result.msg == exp.msg
+
+- name: Submit transfer - Found
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: 123456789
+    state: submitted
+  register: result
+
+- name: Validate action result
+  assert:
+    that:
+    - result.changed
+
+- name: Submit transfer - Not found
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: T1234567
+    state: submitted
+  register: result
+  ignore_errors: True
+
+- name: Validate action result
+  vars:
+    exp:
+      msg: "Axway Transfer CFT returned error 404 with message {'code': 99, 'message': 'Additional error details.'}"
+  assert:
+    that:
+    - not result.changed
+    - result.failed
+    - result.msg == exp.msg
+
+- name: End transfer - Found
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: 123456789
+    state: ended
+  register: result
+
+- name: Validate action result
+  assert:
+    that:
+    - result.changed
+
+- name: End transfer - Not found
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: T1234567
+    state: ended
+  register: result
+  ignore_errors: True
+
+- name: Validate action result
+  vars:
+    exp:
+      msg: "Axway Transfer CFT returned error 404 with message {'code': 99, 'message': 'Additional error details.'}"
+  assert:
+    that:
+    - not result.changed
+    - result.failed
+    - result.msg == exp.msg
+
+- name: Ack transfer - Found
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: 123456789
+    idm: MESSAGE_A
+    msg: I acknowledge this message
+    state: acknowledged
+  register: result
+
+- name: Validate action result
+  assert:
+    that:
+    - result.changed
+
+- name: Ack transfer - Not found
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: T1234567
+    idm: MESSAGE_A
+    msg: I acknowledge this message
+    state: acknowledged
+  register: result
+  ignore_errors: True
+
+- name: Validate action result
+  vars:
+    exp:
+      msg: "Axway Transfer CFT returned error 404 with message {'code': 99, 'message': 'Additional error details.'}"
+  assert:
+    that:
+    - not result.changed
+    - result.failed
+    - result.msg == exp.msg
+
+- name: Nack transfer - Found
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: 123456789
+    idm: MESSAGE_A
+    msg: I negatively acknowledge this message
+    state: nacknowledged
+  register: result
+
+- name: Validate action result
+  assert:
+    that:
+    - result.changed
+
+- name: Nack transfer - Not found
+  warkdev.axway_cft.axway_cft_transfer:
+    idtu: T1234567
+    idm: MESSAGE_A
+    msg: I negatively acknowledge this message
+    state: nacknowledged
+  register: result
+  ignore_errors: True
+
+- name: Validate action result
+  vars:
+    exp:
+      msg: "Axway Transfer CFT returned error 404 with message {'code': 99, 'message': 'Additional error details.'}"
+  assert:
+    that:
+    - not result.changed
+    - result.failed
+    - result.msg == exp.msg

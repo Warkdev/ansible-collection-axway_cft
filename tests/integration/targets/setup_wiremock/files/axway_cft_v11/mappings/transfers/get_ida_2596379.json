@@ -1,18 +1,11 @@
 {
-    "priority": 5,
+    "priority": 4,
     "request": {
         "method": "GET",
         "urlPathPattern": "/transfers",
         "queryParameters": {
             "ida": {
-                "or": [
-                    {
-                        "matches": "^(.*)$"
-                    },
-                    {
-                        "absent": true
-                    }
-                ]
+                "equalTo": "2596379"
             },
             "idtu": {
                 "or": [
@@ -85,7 +78,14 @@
                 ]
             },
             "fields": {
-                "matches": "^(.*)$"
+                "or": [
+                    {
+                        "matches": "^(.*)$"
+                    },
+                    {
+                        "absent": true
+                    }
+                ]
             },
             "offset": {
                 "or": [
@@ -124,7 +124,7 @@
             "transfers": [
                 {
                 "partner": "PARIS",
-                "direct": "send",
+                "direct": "recv",
                 "type": "file",
                 "compatstate": "state",
                 "ack": "ack",
@@ -142,29 +142,7 @@
                 "diagp": "",
                 "requser": "cft_user",
                 "reqgroup": "cft_group",
-                "ida": "2596373"
-                },
-                {
-                "partner": "NEWYORK",
-                "direct": "receive",
-                "type": "file",
-                "compatstate": "state",
-                "ack": "ack",
-                "state": "state",
-                "phase": "K",
-                "phasestep": "E",
-                "idf": "ABCD",
-                "idt": "A0112103",
-                "idtu": "A000004E",
-                "pidtu": "A000004E",
-                "nrec": "89",
-                "frec": "105",
-                "msg": "My tailor is not rich",
-                "diagi": "0",
-                "diagp": "",
-                "requser": "cft_user",
-                "reqgroup": "cft_group",
-                "ida": "2596378"
+                "ida": "2596379"
                 }
             ],
             "numberOfSelectedRecords": 50,

@@ -1,4 +1,5 @@
 {
+    "priority": 1,
     "request": {
         "method": "POST",
         "urlPath": "/transfers/files/outgoings",
@@ -7,14 +8,7 @@
                 "matches": ".*"
             },
             "idf": {
-                "or": [
-                    {
-                        "matches": "[0-9]+"
-                    },
-                    {
-                        "absent": true
-                    }
-                ]
+                "matches": ".*"
             },
             "apitimeout": {
                 "or": [
@@ -29,7 +23,7 @@
         },
         "bodyPatterns": [
             {
-                "matchesJsonPath": "[?(@.fname)][?(@.password)]"
+                "matchesJsonPath": "$.fname"
             }
         ],
         "headers": {
