@@ -1,6 +1,6 @@
 ---
 - name: Gather transfers
-  community.axway_cft.axway_cft_transfer_info:
+  warkdev.axway_cft.axway_cft_transfer_info:
     idtu: T1234568
   register: cft_transfer
 
@@ -276,7 +276,7 @@
     - cft_transfer.transfer == expected_transfer
 
 - name: Gather non-existing transfers
-  community.axway_cft.axway_cft_transfer_info:
+  warkdev.axway_cft.axway_cft_transfer_info:
     idtu: T1234567
   register: result
   ignore_errors: true

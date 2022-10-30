@@ -1,6 +1,6 @@
 ---
 - name: Gather logs
-  community.axway_cft.axway_cft_logs:
+  warkdev.axway_cft.axway_cft_logs:
   register: cft_logs
 
 - name: Validate received logs
@@ -22,7 +22,7 @@
     - cft_logs.logs[0].message == expected_log.message
 
 - name: Gather logs to file
-  community.axway_cft.axway_cft_logs:
+  warkdev.axway_cft.axway_cft_logs:
     dest: "{{ playbook_dir }}/temp.log"
   register: cft_logs
 
@@ -40,7 +40,7 @@
     msg: "{{ result.stdout }}"
 
 - name: Gather logs to file - idempotency
-  community.axway_cft.axway_cft_logs:
+  warkdev.axway_cft.axway_cft_logs:
     dest: "{{ playbook_dir }}/temp.log"
   register: cft_logs
 
@@ -50,7 +50,7 @@
     - not cft_logs.changed
 
 - name: Gather logs to file - force
-  community.axway_cft.axway_cft_logs:
+  warkdev.axway_cft.axway_cft_logs:
     dest: "{{ playbook_dir }}/temp.log"
     force: True
   register: cft_logs

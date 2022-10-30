@@ -3,7 +3,7 @@
   vars:
     ansible_user: dummy
     ansible_password: dummy
-  community.axway_cft.axway_cft_about_info:
+  warkdev.axway_cft.axway_cft_about_info:
   register: result
   ignore_errors: True
 
@@ -20,7 +20,7 @@
   vars:
     ansible_user: admin
     ansible_password: dummy
-  community.axway_cft.axway_cft_about_info:
+  warkdev.axway_cft.axway_cft_about_info:
   register: result
   ignore_errors: True
 

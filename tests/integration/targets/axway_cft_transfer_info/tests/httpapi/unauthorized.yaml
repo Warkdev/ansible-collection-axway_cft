@@ -3,7 +3,7 @@
   vars:
     ansible_user: dummy
     ansible_password: dummy
-  community.axway_cft.axway_cft_transfer_info:
+  warkdev.axway_cft.axway_cft_transfer_info:
     idtu: T1234568
   register: result
   ignore_errors: True
@@ -21,7 +21,7 @@
   vars:
     ansible_user: admin
     ansible_password: dummy
-  community.axway_cft.axway_cft_transfer_info:
+  warkdev.axway_cft.axway_cft_transfer_info:
     idtu: T1234568
   register: result
   ignore_errors: True

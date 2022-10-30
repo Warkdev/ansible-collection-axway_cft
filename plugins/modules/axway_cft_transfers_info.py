@@ -138,9 +138,9 @@ from io import StringIO
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ansible_collections.community.axway_cft.plugins.module_utils.axway_cft_transfers import fetch_transfers
+from ansible_collections.warkdev.axway_cft.plugins.module_utils.axway_cft_transfers import fetch_transfers
 
-from ansible_collections.community.axway_cft.plugins.module_utils.axway_utils import (
+from ansible_collections.warkdev.axway_cft.plugins.module_utils.axway_utils import (
     create_return_object, create_return_error, setup_logging, update_logging_info, get_traceback
 )
 

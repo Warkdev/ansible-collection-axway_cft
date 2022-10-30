@@ -1,3 +1,3 @@
-# Ansible Collection - community.axway_cft
+# Ansible Collection - warkdev.axway_cft
 
 Documentation for the collection.

@@ -1,6 +1,6 @@
 ---
 - name: Gathering info
-  community.axway_cft.axway_cft_about_info:
+  warkdev.axway_cft.axway_cft_about_info:
   register: result
 
 - name: Validate info

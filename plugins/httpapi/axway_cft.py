@@ -23,11 +23,11 @@ from ansible.module_utils.basic import to_text
 from ansible.plugins.httpapi import HttpApiBase
 from ansible.module_utils.six.moves.urllib.error import HTTPError
 
-from ansible_collections.community.axway_cft.plugins.module_utils.constants import (
+from ansible_collections.warkdev.axway_cft.plugins.module_utils.constants import (
     BASE_HEADERS
 )
 
-from ansible_collections.community.axway_cft.plugins.module_utils.common import AxwayModuleError
+from ansible_collections.warkdev.axway_cft.plugins.module_utils.common import AxwayModuleError
 
 
 class HttpApi(HttpApiBase):

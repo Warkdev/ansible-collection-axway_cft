@@ -7,8 +7,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-from ansible_collections.community.axway_cft.plugins.module_utils.axway_utils import parse_fail_message
-from ansible_collections.community.axway_cft.plugins.module_utils.common import AxwayModuleError, build_query_str
+from ansible_collections.warkdev.axway_cft.plugins.module_utils.axway_utils import parse_fail_message
+from ansible_collections.warkdev.axway_cft.plugins.module_utils.common import AxwayModuleError, build_query_str
 from ansible.module_utils.connection import Connection
 
 import logging

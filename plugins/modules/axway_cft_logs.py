@@ -84,13 +84,13 @@ from io import StringIO
 from ansible.module_utils._text import to_bytes
 from ansible.module_utils.basic import AnsibleModule
 
-from ansible_collections.community.axway_cft.plugins.module_utils.axway_cft_logs import fetch_logs
+from ansible_collections.warkdev.axway_cft.plugins.module_utils.axway_cft_logs import fetch_logs
 
-from ansible_collections.community.axway_cft.plugins.module_utils.axway_utils import (
+from ansible_collections.warkdev.axway_cft.plugins.module_utils.axway_utils import (
     create_return_object, create_return_error, setup_logging, update_logging_info, get_traceback
 )
 
-from ansible_collections.community.axway_cft.plugins.module_utils.common import (
+from ansible_collections.warkdev.axway_cft.plugins.module_utils.common import (
     validate_arg_pattern
 )
 

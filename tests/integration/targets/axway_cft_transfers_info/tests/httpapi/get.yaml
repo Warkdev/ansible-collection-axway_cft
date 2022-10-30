@@ -1,6 +1,6 @@
 ---
 - name: Gather transfers
-  community.axway_cft.axway_cft_transfers_info:
+  warkdev.axway_cft.axway_cft_transfers_info:
   register: cft_transfers
 
 - name: Validate received transfers

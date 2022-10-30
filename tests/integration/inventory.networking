@@ -1,2 +1,2 @@
 [axway]
-axway_cft_v11 ansible_host="localhost" ansible_httpapi_port=8443 ansible_connection="httpapi" ansible_network_os="community.axway_cft.axway_cft" ansible_user="admin" ansible_password="Passw0rd" ansible_httpapi_use_ssl="yes" ansible_httpapi_validate_certs="no"
+axway_cft_v11 ansible_host="localhost" ansible_httpapi_port=8443 ansible_connection="httpapi" ansible_network_os="warkdev.axway_cft.axway_cft" ansible_user="admin" ansible_password="Passw0rd" ansible_httpapi_use_ssl="yes" ansible_httpapi_validate_certs="no"
