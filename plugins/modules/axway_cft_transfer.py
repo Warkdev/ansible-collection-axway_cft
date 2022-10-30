@@ -22,18 +22,18 @@ options:
         description: Transfer direction
         type: str
         choices:
-        - RECV
+        - RECEIVE
         - SEND 
-    part:
+    partner:
         description: Partner of the transfer
         type: str
     idf:
         description: Flow identifier.
         type: str
-    apitimeout:
+    api_timeout:
         description: Command timeout.
         type: int
-    fname:
+    filename:
         description: File to be sent.
         type: str
     parm:
@@ -41,9 +41,6 @@ options:
         type: str
     idm:
         description: Message identifier.
-        type: str
-    msg:
-        description: Message data
         type: str
     idtu:
         description: Transfer ID.
@@ -72,23 +69,23 @@ options:
 EXAMPLES = r'''
 - name: Send a new transfer message
   axway_cft_transfer:
-    part: PARIS
+    partner: PARIS
     idm: MESSAGEID
     msg: My little message
 
 - name: Create a new send file transfer request
   axway_cft_transfer:
-    direct: SEND
-    part: PARIS
+    direction: SEND
+    partner: PARIS
     idf: SMSU001
-    fname: C:/tmp/my_file.txt
+    filename: C:/tmp/my_file.txt
 
 - name: Create a new receive file transfer request
   axway_cft_transfer:
-    direct: RECV
-    part: NEWYORK
+    direction: RECEIVE
+    partner: NEWYORK
     idf: SMSU002
-    fname: C:/tmp/my_incoming_file.txt
+    filename: C:/tmp/my_incoming_file.txt
 
 - name: Delete a given transfer
   axway_cft_transfer:
@@ -166,7 +163,10 @@ from io import StringIO
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ansible_collections.warkdev.axway_cft.plugins.module_utils.axway_cft_transfers import fetch_transfer
+from ansible_collections.warkdev.axway_cft.plugins.module_utils.axway_cft_transfers import (
+    delete_transfer, create_message_transfer_request, create_send_file_transfer_request, create_receive_file_transfer_request,
+    halt_transfer, keep_transfer, start_transfer, submit_transfer, resume_transfer, ack_transfer, nack_transfer, end_transfer
+)
 
 from ansible_collections.warkdev.axway_cft.plugins.module_utils.axway_utils import (
     create_return_object, create_return_error, setup_logging, update_logging_info, get_traceback
@@ -182,12 +182,20 @@ class ArgumentSpec(object):
         self.supports_check_mode = True
         argument_spec = dict(
             idtu=dict(type='str'),
-            state=dict(type='str', required=True, default='present', choices=['present', 'absent', 'halted', 'kept', 'started', 'resumed', 'submitted', 'acknowledged', 'nacknowledged', 'ended'])
+            state=dict(type='str', required=True, default='present', choices=['present', 'absent', 'halted', 'kept', 'started', 'resumed', 'submitted', 'acknowledged', 'nacknowledged', 'ended']),
+            direction=dict(type='str', choices=['SEND', 'RECEIVE']),
+            partner=dict(type='str'),
+            idf=dict(type='str'),
+            api_timeout=dict(type='int'),
+            filename=dict(type='str'),
+            parm=dict(type='str'),
+            idm=dict(type='str'),
+            msg=dict(type='str')
         )
         self.argument_spec = {}
         self.argument_spec.update(argument_spec)
         self.required_if = [
-            ['state', 'present', ['direct', 'part', 'idf', 'fname', 'idm', 'msg'], True],
+            ['state', 'present', ['direction', 'partner', 'idf', 'filename', 'idm', 'msg'], True],
             ['state', 'absent', ['idtu']],
             ['state', 'halted', ['idtu']],
             ['state', 'kept', ['idtu']],
@@ -199,57 +207,74 @@ class ArgumentSpec(object):
             ['state', 'ended', ['idtu']]
         ]
         self.mutually_exclusive = [
-            ['direct', 'idm'],
-            ['direct', 'msg'],
+            ['direction', 'idm'],
+            ['direction', 'msg'],
             ['idf', 'idm'],
             ['idf', 'msg'],
-            ['fname', 'idm'],
-            ['fname', 'msg']
+            ['filename', 'idm'],
+            ['filename', 'msg']
         ]
         self.required_by = {
-            'direct': ['part', 'idf', 'fname'],
+            'direct': ['partner', 'idf', 'filename'],
             'idm': ['msg']
         }
 
 
 def __exec_post(module, **kwargs):
-    pass
+    if 'msg' in kwargs and kwargs['msg']:
+        # User trying to create a new message transfer
+        response = create_message_transfer_request(module, partner=kwargs['partner'], idm=kwargs['idm'], msg=kwargs['msg'], apitimeout=kwargs.get('api_timeout'), ida=kwargs.get('ida'))
+    elif 'filename' in kwargs and kwargs['filename']:
+        # User trying to create a new file transfer
+        if kwargs['direction'] == 'SEND':
+            response = create_send_file_transfer_request(module, partner=kwargs['partner'], idf=kwargs['idf'], apitimeout=kwargs.get('api_timeout'), ida=kwargs.get('ida'), fname=kwargs['filename'], parm=kwargs.get('parm'))
+        elif kwargs['direction'] == 'RECEIVE':
+            response = create_receive_file_transfer_request(module, partner=kwargs['partner'], idf=kwargs['idf'], apitimeout=kwargs.get('api_timeout'), ida=kwargs.get('ida'), fname=kwargs['filename'], parm=kwargs.get('parm'))
 
+    return response
 
 def __exec_delete(module, **kwargs):
-    pass
+    response = delete_transfer(module, idtu=kwargs['idtu'])
+    return response
 
 
 def __exec_halt(module, **kwargs):
-    pass
+    response = halt_transfer(module, idtu=kwargs['idtu'])
+    return response
 
 
 def __exec_keep(module, **kwargs):
-    pass
+    response = keep_transfer(module, idtu=kwargs['idtu'])
+    return response
 
 
 def __exec_start(module, **kwargs):
-    pass
-
+    response = start_transfer(module, idtu=kwargs['idtu'])
+    return response
 
 def __exec_resume(module, **kwargs):
-    pass
+    response = resume_transfer(module, idtu=kwargs['idtu'])
+    return response
 
 
 def __exec_submit(module, **kwargs):
-    pass
+    response = submit_transfer(module, idtu=kwargs['idtu'])
+    return response
 
 
 def __exec_ack(module, **kwargs):
-    pass
+    response = ack_transfer(module, idtu=kwargs['idtu'], idm=kwargs['idm'], msg=kwargs['msg'])
+    return response
 
 
 def __exec_nack(module, **kwargs):
-    pass
+    response = nack_transfer(module, idtu=kwargs['idtu'], idm=kwargs['idm'], msg=kwargs['msg'])
+    return response
 
 
 def __exec_end(module, **kwargs):
-    pass
+    response = end_transfer(module, idtu=kwargs['idtu'])
+    return response
 
 
 def exec_module(module):
@@ -276,7 +301,7 @@ def exec_module(module):
     elif state == 'ended':
         response = __exec_end(module=module, **module.params)
     
-    return {}
+    return response
 
 
 def main():
