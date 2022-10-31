@@ -22,7 +22,7 @@ N/A
   - warkdev.axway_cft.axway_transfer_info: retrieves info about a given transfer
   - warkdev.axway_cft.axway_transfer: manages transfer lifecycle (create, update, delete)
   - warkdev.axway_cft.axway_transfers_info: retrieves info about several transfers based on input
-  - warkdev.axway_cft.axway_flow_info: retrieves info about flows (cftsend, cftpart, cftrecv, cftdest)
+  - warkdev.axway_cft.axway_flows_info: retrieves info about flows (cftsend, cftpart, cftrecv, cftdest)
 
 ## Using this collection
 
