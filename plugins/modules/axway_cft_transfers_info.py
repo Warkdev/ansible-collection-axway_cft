@@ -111,26 +111,26 @@ transfers:
     type: list
     elements: dict
     sample:
-        - partner: "PARIS"
-          direct: "INCOMING"
-          type: "string"
-          compatstate: "string"
-          ack: "string"
-          state: "string"
-          phase: "string"
-          phasestep: "string"
-          idf: "string"
-          idt: "string"
-          idtu: "string"
-          pidtu: "string"
-          nrec: "string"
-          frec: "string"
-          msg: "string"
-          diagi: "string
-          diagp: "string"
-          requser: "string"
-          reqgroup: "string"
-          ida: "string"
+    - partner: "PARIS"
+      direct: "INCOMING"
+      type: "string"
+      compatstate: "string"
+      ack: "string"
+      state: "string"
+      phase: "string"
+      phasestep: "string"
+      idf: "string"
+      idt: "string"
+      idtu: "string"
+      pidtu: "string"
+      nrec: "string"
+      frec: "string"
+      msg: "string"
+      diagi: "string"
+      diagp: "string"
+      requser: "string"
+      reqgroup: "string"
+      ida: "string"
 '''
 
 import logging
@@ -161,7 +161,8 @@ class ArgumentSpec(object):
             idf=dict(type='str'),
             phase=dict(type='str', choices=['A', 'T', 'Y', 'Z', 'X']),
             phasestep=dict(type='str', choices=['D', 'C', 'E', 'K', 'H', 'X']),
-            fields=dict(type='list', elements='str', default=['PART', 'DIRECT', 'TYPE', 'COMPATSTATE', 'ACK', 'STATE', 'PHASE', 'PHASESTEP' , 'IDF', 'IDT', 'IDTU', 'PIDTU', 'NREC', 'FREC', 'MSG', 'DIAGI', 'DIAGP', 'REQUSER', 'REQGROUP', 'IDA']),
+            fields=dict(type='list', elements='str', default=['PART', 'DIRECT', 'TYPE', 'COMPATSTATE', 'ACK', 'STATE', 'PHASE', 'PHASESTEP',
+                        'IDF', 'IDT', 'IDTU', 'PIDTU', 'NREC', 'FREC', 'MSG', 'DIAGI', 'DIAGP', 'REQUSER', 'REQGROUP', 'IDA']),
             offset=dict(type='int', default=0),
             limit=dict(type='int', default=100)
         )

@@ -14,8 +14,9 @@ import re
 import json
 try:
     from urllib.parse import quote_plus
-except:
-    from urllib import quote_plus #  Python 2 fallback
+except Exception:
+    from urllib import quote_plus  # Python 2 fallback
+
 
 def flattened_to_bool(value):
     return flatten_boolean(value) == 'yes'

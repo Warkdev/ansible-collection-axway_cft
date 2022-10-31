@@ -2,8 +2,8 @@
     "docs": "https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/pep8.html", 
     "results": [
         {
-            "message": "The test `ansible-test sanity --test pep8` [[explain](https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/pep8.html)] failed with 7 errors:", 
-            "output": "plugins/module_utils/common.py:16:1: E722: do not use bare 'except'\nplugins/module_utils/common.py:17:34: E261: at least two spaces before inline comment\nplugins/module_utils/common.py:17:35: E262: inline comment should start with '# '\nplugins/module_utils/common.py:19:1: E302: expected 2 blank lines, found 1\nplugins/modules/axway_cft_logs.py:143:161: E501: line too long (174 > 160 characters)\nplugins/modules/axway_cft_transfers_info.py:164:140: E203: whitespace before ','\nplugins/modules/axway_cft_transfers_info.py:164:161: E501: line too long (245 > 160 characters)"
+            "message": "The test `ansible-test sanity --test pep8` [[explain](https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/pep8.html)] failed with 2 errors:", 
+            "output": "plugins/modules/axway_cft_transfer.py:245:57: E127: continuation line over-indented for visual indent\nplugins/modules/axway_cft_transfer.py:252:57: E128: continuation line under-indented for visual indent"
         }
     ], 
     "verified": false

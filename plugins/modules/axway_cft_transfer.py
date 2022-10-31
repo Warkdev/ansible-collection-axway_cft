@@ -14,7 +14,7 @@ module: axway_cft_transfer
 short_description: Perform action on the given transfer.
 description:
   - Perform the given action on the transfer corresponding to the provided idtu.
-  - Note that, although check_mode is supported, this module will always return "changed" as result, 
+  - Note that, although check_mode is supported, this module will always return "changed" as result,
     this is due to lack of knowledge from how the product is working.
 version_added: "1.0.0"
 author:
@@ -28,7 +28,7 @@ options:
         type: str
         choices:
         - RECEIVE
-        - SEND 
+        - SEND
     partner:
         description: Partner of the transfer
         type: str
@@ -56,7 +56,6 @@ options:
     state:
         description: State of the transfer after this module is executed
         type: str
-        required: true
         default: present
         choices:
         - present
@@ -67,7 +66,7 @@ options:
         - resumed
         - submitted
         - acknowledged
-        - nacknowleged
+        - nacknowledged
         - ended
 '''
 
@@ -148,6 +147,7 @@ transfer:
     description: The transfer created
     returned: created
     type: dict
+    elements: dict
     sample:
         partner: string
         idf: string
@@ -159,9 +159,9 @@ transfer:
         ida: string
         diagi: string
         diagp: string
-        links:
-            rel: string
-            href: string
+        links: string
+        rel: string
+        href: string
 '''
 
 import logging
@@ -190,7 +190,8 @@ class ArgumentSpec(object):
         self.supports_check_mode = True
         argument_spec = dict(
             idtu=dict(type='str'),
-            state=dict(type='str', default='present', choices=['present', 'absent', 'halted', 'kept', 'started', 'resumed', 'submitted', 'acknowledged', 'nacknowledged', 'ended']),
+            state=dict(type='str', default='present',
+                       choices=['present', 'absent', 'halted', 'kept', 'started', 'resumed', 'submitted', 'acknowledged', 'nacknowledged', 'ended']),
             direction=dict(type='str', choices=['SEND', 'RECEIVE']),
             partner=dict(type='str'),
             idf=dict(type='str'),
@@ -240,17 +241,21 @@ def __exec_post(module, **kwargs):
         if module.check_mode:
             response = {'changed': True, 'transfer': {}}  # Change state is reported only if CFT Data doesn't exists
         else:
-            response = create_message_transfer_request(module, partner=kwargs['partner'], idm=kwargs['idm'], msg=kwargs['msg'], apitimeout=kwargs.get('api_timeout'), ida=kwargs.get('ida'))
+            response = create_message_transfer_request(module, partner=kwargs['partner'], idm=kwargs['idm'], msg=kwargs['msg'],
+                                                       apitimeout=kwargs.get('api_timeout'), ida=kwargs.get('ida'))
     elif 'filename' in kwargs and kwargs['filename']:
         if module.check_mode:
             response = {'changed': True, 'transfer': {}}
         # User trying to create a new file transfer
         elif kwargs['direction'] == 'SEND':
-            response = create_send_file_transfer_request(module, partner=kwargs['partner'], idf=kwargs['idf'], apitimeout=kwargs.get('api_timeout'), ida=kwargs.get('ida'), fname=kwargs['filename'], parm=kwargs.get('parm'))
+            response = create_send_file_transfer_request(module, partner=kwargs['partner'], idf=kwargs['idf'], apitimeout=kwargs.get('api_timeout'),
+                                                         ida=kwargs.get('ida'), fname=kwargs['filename'], parm=kwargs.get('parm'))
         elif kwargs['direction'] == 'RECEIVE':
-            response = create_receive_file_transfer_request(module, partner=kwargs['partner'], idf=kwargs['idf'], apitimeout=kwargs.get('api_timeout'), ida=kwargs.get('ida'), fname=kwargs['filename'], parm=kwargs.get('parm'))
+            response = create_receive_file_transfer_request(module, partner=kwargs['partner'], idf=kwargs['idf'], apitimeout=kwargs.get('api_timeout'),
+                                                            ida=kwargs.get('ida'), fname=kwargs['filename'], parm=kwargs.get('parm'))
 
     return response
+
 
 def __exec_delete(module, **kwargs):
     try:
@@ -277,6 +282,7 @@ def __exec_keep(module, **kwargs):
 def __exec_start(module, **kwargs):
     response = start_transfer(module, idtu=kwargs['idtu'])
     return response
+
 
 def __exec_resume(module, **kwargs):
     response = resume_transfer(module, idtu=kwargs['idtu'])
@@ -326,7 +332,7 @@ def exec_module(module):
         response = __exec_nack(module=module, **module.params)
     elif state == 'ended':
         response = __exec_end(module=module, **module.params)
-    
+
     return response
 
 
