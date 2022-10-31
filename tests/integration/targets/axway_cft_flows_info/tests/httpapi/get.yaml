@@ -1,0 +1,108 @@
+---
+- name: Gather CFTSEND flows info
+  warkdev.axway_cft.axway_cft_flows_info:
+    type: CFTSEND
+  register: result
+
+- name: Validate received CFTSEND
+  vars:
+    expected:
+      cftsend:
+      - id: BIN
+      - id: TXT
+      numberOfSelectedRecords: 2
+      numberOfRecords: 2
+      offset: 0
+      changed: False
+      failed: False
+      rc: 0
+      stderr: ""
+      stderr_lines: []
+      stdout: ""
+      stdout_lines: []
+      skipped: False
+  assert:
+    that:
+    - result.cftsend is defined
+    - result == expected
+
+- name: Gather CFTRECV flows info
+  warkdev.axway_cft.axway_cft_flows_info:
+    type: CFTRECV
+  register: result
+
+- name: Validate received CFTRECV
+  vars:
+    expected:
+      cftrecv:
+      - id: BIN
+      - id: TXT
+      numberOfSelectedRecords: 2
+      numberOfRecords: 2
+      offset: 0
+      changed: False
+      failed: False
+      rc: 0
+      stderr: ""
+      stderr_lines: []
+      stdout: ""
+      stdout_lines: []
+      skipped: False
+  assert:
+    that:
+    - result.cftrecv is defined
+    - result == expected
+
+- name: Gather CFTPART flows info
+  warkdev.axway_cft.axway_cft_flows_info:
+    type: CFTPART
+  register: result
+
+- name: Validate received CFTPART
+  vars:
+    expected:
+      cftpart:
+      - id: PARIS
+      - id: NEWYORK
+      numberOfSelectedRecords: 2
+      numberOfRecords: 2
+      offset: 0
+      changed: False
+      failed: False
+      rc: 0
+      stderr: ""
+      stderr_lines: []
+      stdout: ""
+      stdout_lines: []
+      skipped: False
+  assert:
+    that:
+    - result.cftpart is defined
+    - result == expected
+
+- name: Gather CFTDEST flows info
+  warkdev.axway_cft.axway_cft_flows_info:
+    type: CFTDEST
+  register: result
+
+- name: Validate received CFTDEST
+  vars:
+    expected:
+      cftdest:
+      - id: DEST_FRANCE
+      - id: DEST_CALIFORNIA
+      numberOfSelectedRecords: 2
+      numberOfRecords: 2
+      offset: 0
+      changed: False
+      failed: False
+      rc: 0
+      stderr: ""
+      stderr_lines: []
+      stdout: ""
+      stdout_lines: []
+      skipped: False
+  assert:
+    that:
+    - result.cftdest is defined
+    - result == expected

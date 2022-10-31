@@ -4,7 +4,14 @@
         "urlPathPattern": "/objects/cftpart",
         "queryParameters": {
             "offset": {
-                "matches": "^[0-9]+$"
+                "or": [
+                {
+                    "matches": "^[0-9]+$"
+                },
+                {
+                    "absent": true
+                }
+            ]
             },
             "limit": {
                 "matches": "^[0-9]+$"

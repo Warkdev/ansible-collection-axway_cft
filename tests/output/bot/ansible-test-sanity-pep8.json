@@ -2,8 +2,8 @@
     "docs": "https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/pep8.html", 
     "results": [
         {
-            "message": "The test `ansible-test sanity --test pep8` [[explain](https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/pep8.html)] failed with 2 errors:", 
-            "output": "plugins/modules/axway_cft_transfer.py:245:57: E127: continuation line over-indented for visual indent\nplugins/modules/axway_cft_transfer.py:252:57: E128: continuation line under-indented for visual indent"
+            "message": "The test `ansible-test sanity --test pep8` [[explain](https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/pep8.html)] failed with 1 error:", 
+            "output": "plugins/module_utils/axway_cft_objects.py:90:32: W292: no newline at end of file"
         }
     ], 
     "verified": false

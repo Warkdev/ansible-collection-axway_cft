@@ -2,8 +2,8 @@
     "docs": "https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/pylint.html", 
     "results": [
         {
-            "message": "The test `ansible-test sanity --test pylint` [[explain](https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/pylint.html)] failed with 2 errors:", 
-            "output": "plugins/module_utils/common.py:17:0: bare-except: No exception type(s) specified\nplugins/modules/axway_cft_transfer.py:329:0: trailing-whitespace: Trailing whitespace"
+            "message": "The test `ansible-test sanity --test pylint` [[explain](https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/pylint.html)] failed with 1 error:", 
+            "output": "plugins/module_utils/axway_cft_objects.py:90:0: missing-final-newline: Final newline missing"
         }
     ], 
     "verified": false
