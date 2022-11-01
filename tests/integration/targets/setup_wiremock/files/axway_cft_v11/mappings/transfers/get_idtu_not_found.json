@@ -2,7 +2,7 @@
     "priority": 1,
     "request": {
         "method": "GET",
-        "urlPathPattern": "/transfers/T1234567",
+        "urlPathPattern": "/cft/api/v1/transfers/T1234567",
         "headers": {
             "Accept": {
                 "equalTo": "application/json"

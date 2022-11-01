@@ -1,7 +1,7 @@
 {
     "request": {
         "method": "GET",
-        "urlPathPattern": "/objects/cftrecv",
+        "urlPathPattern": "/cft/api/v1/objects/cftrecv",
         "queryParameters": {
             "offset": {
                 "or": [

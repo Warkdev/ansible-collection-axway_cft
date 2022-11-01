@@ -1,7 +1,7 @@
 {
     "request": {
         "method": "GET",
-        "urlPathPattern": "/objects/cftsend",
+        "urlPathPattern": "/cft/api/v1/objects/cftsend",
         "queryParameters": {
             "offset": {
                 "matches": "^[0-9]+$"

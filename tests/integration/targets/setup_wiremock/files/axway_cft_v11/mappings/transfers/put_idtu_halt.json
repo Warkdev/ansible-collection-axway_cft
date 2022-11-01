@@ -1,7 +1,7 @@
 {
     "request": {
         "method": "PUT",
-        "urlPathPattern": "/transfers/(.*)/halt",
+        "urlPathPattern": "/cft/api/v1/transfers/(.*)/halt",
         "headers": {
             "Accept": {
                 "equalTo": "application/json"

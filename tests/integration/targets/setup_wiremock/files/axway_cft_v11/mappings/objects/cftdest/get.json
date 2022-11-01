@@ -1,7 +1,7 @@
 {
     "request": {
         "method": "GET",
-        "urlPathPattern": "/objects/cftdest",
+        "urlPathPattern": "/cft/api/v1/objects/cftdest",
         "queryParameters": {
             "offset": {
                 "or": [

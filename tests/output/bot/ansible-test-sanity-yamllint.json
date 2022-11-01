@@ -3,7 +3,7 @@
     "results": [
         {
             "message": "The test `ansible-test sanity --test yamllint` [[explain](https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/yamllint.html)] failed with 2 errors:", 
-            "output": "plugins/modules/axway_cft_transfers_info.py:130:19: error: RETURN: syntax error: expected <block end>, but found '<scalar>' (syntax)\nplugins/modules/axway_cft_transfers_info.py:130:19: unparsable-with-libyaml: while parsing a block mapping - did not find expected key"
+            "output": "plugins/modules/axway_cft_about_info.py:36:15: error: RETURN: syntax error: mapping values are not allowed here (syntax)\nplugins/modules/axway_cft_about_info.py:36:15: unparsable-with-libyaml: None - mapping values are not allowed in this context"
         }
     ], 
     "verified": false

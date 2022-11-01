@@ -2,7 +2,7 @@
     "priority": 5,
     "request": {
         "method": "POST",
-        "urlPath": "/transfers/messages",
+        "urlPath": "/cft/api/v1/transfers/messages",
         "queryParameters": {
             "part": {
                 "matches": ".*"

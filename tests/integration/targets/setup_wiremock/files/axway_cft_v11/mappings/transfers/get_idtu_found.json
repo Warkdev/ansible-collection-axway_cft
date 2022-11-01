@@ -1,7 +1,7 @@
 {
     "request": {
         "method": "GET",
-        "urlPathPattern": "/transfers/123456789",
+        "urlPathPattern": "/cft/api/v1/transfers/123456789",
         "headers": {
             "Accept": {
                 "equalTo": "application/json"

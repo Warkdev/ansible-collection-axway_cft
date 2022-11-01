@@ -2,8 +2,8 @@
     "docs": "https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/validate-modules.html", 
     "results": [
         {
-            "message": "The test `ansible-test sanity --test validate-modules` [[explain](https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/validate-modules.html)] failed with 3 errors:", 
-            "output": "plugins/modules/axway_cft_transfer.py:0:0: doc-choices-do-not-match-spec: Argument 'state' in argument_spec defines choices as (['present', 'absent', 'halted', 'kept', 'started', 'resumed', 'submitted', 'acknowledged', 'nacknowledged', 'ended']) but documentation defines choices as (['present', 'absent', 'halted', 'kept', 'started', 'resumed', 'submitted', 'acknowledged', 'nacknowleged', 'ended'])\nplugins/modules/axway_cft_transfer.py:0:0: doc-required-mismatch: Argument 'state' in argument_spec is not required, but is documented as being required\nplugins/modules/axway_cft_transfer.py:0:0: no-default-for-required-parameter: DOCUMENTATION.options.state: Argument is marked as required but specifies a default. Arguments with a default should not be marked as required for dictionary value @ data['options']['state']. Got {'description': 'State of the transfer after this module is executed', 'type': 'str', 'required': True, 'default': 'present', 'choices': ['present', 'absent', 'halted', 'kept', 'started', 'resumed', 'submitted', 'acknowledged', 'nacknowleged', 'ended']}"
+            "message": "The test `ansible-test sanity --test validate-modules` [[explain](https://docs.ansible.com/ansible-core/devel/dev_guide/testing/sanity/validate-modules.html)] failed with 2 errors:", 
+            "output": "plugins/modules/axway_cft_about_info.py:0:0: documentation-error: Unknown DOCUMENTATION error, see TRACE: mapping values are not allowed in this context\n  in \"<unicode string>\", line 9, column 15\nplugins/modules/axway_cft_about_info.py:9:15: return-syntax-error: RETURN is not valid YAML"
         }
     ], 
     "verified": false

@@ -1,7 +1,7 @@
 {
     "request": {
         "method": "PUT",
-        "urlPathPattern": "/transfers/(.*)/ack",
+        "urlPathPattern": "/cft/api/v1/transfers/(.*)/ack",
         "queryParameters": {
             "idm": {
                 "matches": ".*"

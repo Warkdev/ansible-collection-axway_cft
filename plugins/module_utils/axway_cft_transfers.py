@@ -13,7 +13,7 @@ from ansible.module_utils.connection import Connection
 
 import logging
 
-uri = '/transfers'
+uri = '/cft/api/v1/transfers'
 
 logger = logging.getLogger(__name__)
 

@@ -1,7 +1,7 @@
 {
     "request": {
         "method": "GET",
-        "url": "/about",
+        "url": "/cft/api/v1/about",
         "headers": {
             "Accept": {
                 "equalTo": "application/json"

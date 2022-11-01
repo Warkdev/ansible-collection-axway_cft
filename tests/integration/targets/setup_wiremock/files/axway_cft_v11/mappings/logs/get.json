@@ -1,7 +1,7 @@
 {
     "request": {
         "method": "GET",
-        "urlPathPattern": "/logs",
+        "urlPathPattern": "/cft/api/v1/logs",
         "queryParameters": {
             "severity": {
                 "or": [

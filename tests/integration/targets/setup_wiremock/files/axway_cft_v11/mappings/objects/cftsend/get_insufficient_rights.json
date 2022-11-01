@@ -1,7 +1,7 @@
 {
     "request": {
         "method": "GET",
-        "urlPathPattern": "/objects/cftpart",
+        "urlPathPattern": "/cft/api/v1/objects/cftpart",
         "queryParameters": {
             "offset": {
                 "matches": "^[0-9]+$"

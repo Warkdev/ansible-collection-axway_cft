@@ -2,7 +2,7 @@
     "priority": 4,
     "request": {
         "method": "GET",
-        "urlPathPattern": "/transfers",
+        "urlPathPattern": "/cft/api/v1/transfers",
         "queryParameters": {
             "ida": {
                 "equalTo": "2596378"
