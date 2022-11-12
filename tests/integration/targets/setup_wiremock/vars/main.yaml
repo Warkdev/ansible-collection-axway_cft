@@ -1,1 +1,0 @@
-setup_wiremock_docker_image: wiremock/wiremock:2.34.0

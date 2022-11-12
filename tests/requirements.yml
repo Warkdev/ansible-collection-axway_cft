@@ -1,4 +1,5 @@
 integration_tests_dependencies:
+- community.crypto
 - community.docker
 - community.internal_test_tools
 unit_tests_dependencies:

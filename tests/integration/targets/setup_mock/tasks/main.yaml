@@ -1,0 +1,53 @@
+---
+- name: Pull default Prism image
+  community.docker.docker_image:
+    name: "{{ setup_mock_docker_image }}"
+    source: pull
+
+- name: Pull default Nginx image
+  community.docker.docker_image:
+    name: "{{ setup_nginx_docker_image }}"
+    source: pull
+
+- name: Creating dedicated testing network
+  docker_network:
+    name: axway_cft_collection_test_network
+
+- name: Setting up Prism containers
+  community.docker.docker_container:
+    name: "{{ axway_cft.name }}"
+    image: "{{ setup_mock_docker_image }}"
+    volumes:
+    - "{{ role_path }}/files/prism:/root/apis"
+    networks:
+    - name: axway_cft_collection_test_network
+    command: "mock -h 0.0.0.0 /root/apis/{{ axway_cft.config }}"
+    state: started
+  loop: "{{ setup_axway_cft }}"
+  loop_control:
+    loop_var: axway_cft
+    label: "Setting up axway CFT {{ axway_cft.name }}"
+
+- name: Create Nginx certificate
+  import_tasks: generate_keys.yml
+
+- name: Setting up Nginx
+  community.docker.docker_container:
+    name: web_proxy
+    image: "{{ setup_nginx_docker_image }}"
+    ports:
+    - "8443:443"
+    volumes:
+    - "{{ role_path }}/files/nginx:/etc/nginx/conf.d:ro"
+    networks:
+    - name: axway_cft_collection_test_network
+    state: started
+
+- name: Pause for a couple of seconds before check
+  pause:
+    seconds: 1
+
+- name: Wait for Nginx service to be up
+  wait_for:
+    host: localhost
+    port: 8443

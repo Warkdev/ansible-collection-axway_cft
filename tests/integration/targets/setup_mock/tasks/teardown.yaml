@@ -1,0 +1,19 @@
+---
+- name: Deleting Prism containers
+  community.docker.docker_container:
+    name: "{{ axway_cft.name }}"
+    state: absent
+  loop: "{{ setup_axway_cft }}"
+  loop_control:
+    loop_var: axway_cft
+    label: "Setting up axway CFT {{ axway_cft.name }}"
+
+- name: Deleting Nginx containers
+  community.docker.docker_container:
+    name: web_proxy
+    state: absent
+
+- name: Deleting dedicated testing network
+  docker_network:
+    name: axway_cft_collection_test_network
+    state: absent

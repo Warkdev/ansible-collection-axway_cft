@@ -1,0 +1,19 @@
+---
+- name: Create Nginx certificate private key
+  community.crypto.openssl_privatekey:
+    path: "{{ role_path }}/files/nginx/ansible-dev.local.be.key"
+
+- name: Create Nginx certificate signing request (CSR)
+  community.crypto.openssl_csr_pipe:
+    privatekey_path: "{{ role_path }}/files/nginx/ansible-dev.local.be.key"
+    common_name: ansible-dev.local.be
+    organization_name: private
+    country_name: be
+  register: csr
+
+- name: Create Nginx certificate files from CSR
+  community.crypto.x509_certificate:
+    path: "{{ role_path }}/files/nginx/ansible-dev.local.be.crt"
+    csr_content: "{{ csr.csr }}"
+    privatekey_path: "{{ role_path }}/files/nginx/ansible-dev.local.be.key"
+    provider: selfsigned

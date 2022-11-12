@@ -1,0 +1,17 @@
+setup_mock_docker_image: stoplight/prism:latest
+setup_nginx_docker_image: nginx:latest
+setup_axway_cft:
+  - name: prism_axway_cft_v332
+    config: openapi-33-2.yml
+  - name: prism_axway_cft_v35
+    config: openapi-35.yml
+  - name: prism_axway_cft_v36
+    config: openapi-36.yml
+  - name: prism_axway_cft_v37
+    config: openapi-37.yml
+  - name: prism_axway_cft_v38
+    config: openapi-38.yml
+  - name: prism_axway_cft_v39
+    config: openapi-39.yml
+  - name: prism_axway_cft_v310
+    config: openapi-310.yml
